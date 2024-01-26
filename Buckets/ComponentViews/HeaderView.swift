@@ -1,5 +1,9 @@
 //
-// Copyright © 2021 E*TRADE Financial. All rights reserved.
+//  HeaderView.swift
+//  Buckets
+//
+//  Created by Romell Bolton on 1/26/24.
+//  Copyright © 2024 Romell Bolton. All rights reserved.
 //
 
 import SwiftUI
@@ -9,7 +13,7 @@ struct HeaderView: View {
     var body: some View {
         VStack {
             HStack {
-                Image("NBALogo")
+                Image("AppIcon2")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 60)

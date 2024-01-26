@@ -1,5 +1,9 @@
 //
-// Copyright © 2021 E*TRADE Financial. All rights reserved.
+//  Constants.swift
+//  Buckets
+//
+//  Created by Romell Bolton on 1/26/24.
+//  Copyright © 2024 Romell Bolton. All rights reserved.
 //
 
 import SwiftUI
@@ -41,8 +45,8 @@ enum GameDays: String, CaseIterable, Identifiable {
 
 enum Teams: String, CaseIterable, Identifiable {
     case AtlantaHawks             = "Atlanta Hawks"
-    case BrooklinNets             = "Brooklin Nets"
     case BostonCeltics            = "Boston Celtics"
+    case BrooklynNets             = "Brooklyn Nets"
     case CharlotteHornets         = "Charlotte Hornets"
     case ChicagoBulls             = "Chicago Bulls"
     case ClevelandCavaliers       = "Cleveland Cavaliers"
@@ -66,7 +70,7 @@ enum Teams: String, CaseIterable, Identifiable {
     case PhoenixSuns              = "Phoenix Suns"
     case PortlandTrailblazers     = "Portland Trailblazers"
     case SacramentoKings          = "Sacramento Kings"
-    case SanAntonioSpurs          = "SanAntonio Spurs"
+    case SanAntonioSpurs          = "San Antonio Spurs"
     case TorontoRaptors           = "Toronto Raptors"
     case UtahJazz                 = "Utah Jazz"
     case WashingtonWizards        = "Washington Wizards"
@@ -77,8 +81,8 @@ enum Teams: String, CaseIterable, Identifiable {
 
 let teamsArray = [
     "Atlanta Hawks",
-    "Brooklin Nets",
     "Boston Celtics",
+    "Brooklyn Nets",
     "Charlotte Hornets",
     "Chicago Bulls",
     "Cleveland Cavaliers",
@@ -102,7 +106,7 @@ let teamsArray = [
     "Phoenix Suns",
     "Portland Trailblazers",
     "Sacramento Kings",
-    "SanAntonio Spurs",
+    "San Antonio Spurs",
     "Toronto Raptors",
     "Utah Jazz",
     "Washington Wizards"
@@ -110,8 +114,8 @@ let teamsArray = [
 
 let teamsDict: [String : Image] = [
     "Atlanta Hawks" : Logos.AtlantaHawks,
-    "Brooklin Nets" : Logos.BrooklinNets,
     "Boston Celtics" : Logos.BostonCeltics,
+    "Brooklyn Nets" : Logos.BrooklynNets,
     "Charlotte Hornets" : Logos.CharlotteHornets,
     "Chicago Bulls" : Logos.ChicagoBulls,
     "Cleveland Cavaliers" : Logos.ClevelandCavaliers,
@@ -144,8 +148,8 @@ let teamsDict: [String : Image] = [
 
 enum Logos {
     static let AtlantaHawks             = Image("ATL")
-    static let BrooklinNets             = Image("BKN")
     static let BostonCeltics            = Image("BOS")
+    static let BrooklynNets             = Image("BKN")
     static let CharlotteHornets         = Image("CHA")
     static let ChicagoBulls             = Image("CHI")
     static let ClevelandCavaliers       = Image("CLE")
@@ -184,7 +188,7 @@ let team: [Int: Image] = [
     5: Logos.OrlandoMagic,
     6: Logos.NewYorkKnicks,
     7: Logos.Philadelphia76ers,
-    8: Logos.BrooklinNets,
+    8: Logos.BrooklynNets,
     9: Logos.BostonCeltics,
     10: Logos.TorontoRaptors,
     11: Logos.ChicagoBulls,

@@ -1,11 +1,12 @@
 //
-// Copyright © 2021 E*TRADE Financial. All rights reserved.
+//  StandingsView.swift
+//  Buckets
+//
+//  Created by Romell Bolton on 1/26/24.
+//  Copyright © 2024 Romell Bolton. All rights reserved.
 //
 
 import SwiftUI
-
-import SwiftUI
-
 
 struct StandingsView: View {
     @StateObject private var StandingsVM = StandingsViewModel()

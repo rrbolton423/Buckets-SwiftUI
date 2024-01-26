@@ -1,5 +1,9 @@
 //
-// Copyright © 2021 E*TRADE Financial. All rights reserved.
+//  Game.swift
+//  Buckets
+//
+//  Created by Romell Bolton on 1/26/24.
+//  Copyright © 2024 Romell Bolton. All rights reserved.
 //
 
 import Foundation
