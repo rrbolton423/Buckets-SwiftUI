@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct FavoriteView: View {
     @State private var favoriteTeam: Teams = .AtlantaHawks
 

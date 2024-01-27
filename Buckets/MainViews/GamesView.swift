@@ -42,10 +42,6 @@ struct GamesView: View {
             }
             .padding()
         }
-
-
-
-
     }
 }
 
@@ -62,15 +58,19 @@ struct GameView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 70)
+                    .frame(maxWidth: .infinity)
                 Spacer()
                 Text("\(game.AwayTeamScore ?? 0) - \(game.HomeTeamScore ?? 0)")
                     .font(.title)
                     .bold()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.01)
                 Spacer()
                 team[game.HomeTeamID]!
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 70)
+                    .frame(maxWidth: .infinity)
             }
             if game.Status == "InProgress" {
                 HStack {

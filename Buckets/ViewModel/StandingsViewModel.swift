@@ -65,5 +65,4 @@ class StandingsViewModel: ObservableObject {
         }
         task.resume()
     }
-
 }

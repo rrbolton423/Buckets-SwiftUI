@@ -23,6 +23,7 @@ struct StandingsView: View {
                     if team.Conference == chosenConference.rawValue {
                         TeamView(teamStandings: team, position: team.ConferenceRank!)
                             .padding(.horizontal)
+                        Divider()
                     }
                 }
             }
@@ -49,11 +50,6 @@ struct TeamView: View {
             Text("\(position)")
                 .font(.headline)
                 .frame(width: 16)
-
-            team[teamStandings.TeamID]!
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 36)
 
             Text(teamStandings.Name ?? "")
                 .bold()
@@ -85,6 +81,8 @@ struct TeamView: View {
             .frame(width: 40)
 
         }
+        .lineLimit(1)
+        .minimumScaleFactor(0.01)
         .onTapGesture {
             showDetails.toggle()
         }
