@@ -213,4 +213,4 @@ let team: [Int: Image] = [
     30: Logos.SacramentoKings
 ]
 
-let apiKey = "0007ff159baf49aeab298fe5b9ab195c"
+let apiKey = "2552223971884f81b4ed8dceddb99e35"
