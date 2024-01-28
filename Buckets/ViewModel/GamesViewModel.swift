@@ -24,7 +24,6 @@ class GamesViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.yesterdaysGames = games
                 }
-//                print("Yesterday Call")
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
                 self.isShowingError = true
@@ -38,7 +37,6 @@ class GamesViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.todaysGames = games
                 }
-//                print("Today Call")
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
                 self.isShowingError = true
@@ -52,7 +50,6 @@ class GamesViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.tomorrowsGames = games
                 }
-//                print("Tomorrow Call")
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
                 self.isShowingError = true

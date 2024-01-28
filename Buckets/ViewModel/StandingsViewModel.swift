@@ -21,7 +21,6 @@ class StandingsViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.standings = results
                 }
-//                print("Standings Call")
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
                 self.isShowingError = true
@@ -38,7 +37,7 @@ class StandingsViewModel: ObservableObject {
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("d0c832f6c13b4777a5d9af5923746725", forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
+        request.setValue(apiKey, forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 

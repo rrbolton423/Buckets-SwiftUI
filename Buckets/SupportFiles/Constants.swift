@@ -214,4 +214,4 @@ let team: [Int: Image] = [
 ]
 
 
-let apiKey = "d0c832f6c13b4777a5d9af5923746725"
+let apiKey = ""
