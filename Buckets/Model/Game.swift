@@ -21,10 +21,6 @@ struct Game: Codable, Hashable {
     let Quarter: String?            //NIL, 1, 2, 3, 4, Half, OT
     let TimeRemainingMinutes: Int?
     let TimeRemainingSeconds: Int?
-
-    let GlobalGameID: Int           //ID for this game, unique accross all sports/leagues
-
-    let IsClosed: Bool
     let Quarters: [Quarter]
 
     struct Quarter: Codable, Hashable {

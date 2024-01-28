@@ -12,7 +12,7 @@ class StandingsViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isShowingError = false
 
-    let standingsEndpoint   = "https://fly.sportsdata.io/v3/nba/scores/json/Standings/\(Date.getYearString())?key=\(apiKey)"
+    let standingsEndpoint   = "https://api.sportsdata.io/api/nba/odds/json/Standings/\(Date.getYearString())"
 
     init() {
         self.getStandings { results in
@@ -35,8 +35,12 @@ class StandingsViewModel: ObservableObject {
             completed(.failure(NBAError.badUrl))
             return
         }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("d0c832f6c13b4777a5d9af5923746725", forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
 
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
             if let _ = error {
                 completed(.failure(NBAError.invalidResponse))

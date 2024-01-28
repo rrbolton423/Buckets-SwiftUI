@@ -128,15 +128,45 @@ struct TeamView: View {
 
 struct TopBar: View {
     var body: some View {
-        HStack(spacing: 0) {
+        HStack {
+            Text("")
+                .font(.headline)
+                .frame(width: 16)
+
+            Text("")
+                .bold()
+
             Spacer()
-            Text("W").frame(width: 40)
-            Text("L").frame(width: 40)
-            Text("%").frame(width: 40)
-            Text("D").frame(width: 40)
+
+            HStack {
+                Spacer()
+                Text("W")
+            }
+            .frame(width: 40)
+
+            HStack {
+                Spacer()
+                Text("L")
+            }
+            .frame(width: 40)
+
+            HStack {
+                Spacer()
+                Text("%")
+            }
+            .frame(width: 40)
+
+            HStack {
+                Spacer()
+                Text("D")
+            }
+            .frame(width: 40)
+
         }
         .font(.headline)
-        .padding(.horizontal, 4)
+        .lineLimit(1)
+        .minimumScaleFactor(0.01)
+        .padding(.horizontal)
     }
 }
 

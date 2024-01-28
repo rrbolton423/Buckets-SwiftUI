@@ -62,13 +62,12 @@ class GamesViewModel: ObservableObject {
     }
 
     func getGames(day: String, completed: @escaping (Result<[Game], Error>) -> Void) {
-        let endpoint = "https://fly.sportsdata.io/v3/nba/scores/json/GamesByDate/\(day)?key=\(apiKey)"
+        let endpoint = "https://api.sportsdata.io/api/nba/odds/json/GamesByDate/\(day)?key=\(apiKey)"
 
         guard let url = URL(string: endpoint) else {
             completed(.failure(NBAError.badUrl))
             return
-        }
-
+        }        
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let _ = error {
                 completed(.failure(NBAError.invalidData))
