@@ -53,16 +53,37 @@ class StandingsViewModel: ObservableObject {
                 return
             }
 
-            let decoder = JSONDecoder()
-
             do {
-                let standings = try decoder.decode(LeagueStandings.self, from: data)
-                if let resultSets = standings.resultSets {
-                    completed(.success(standings.resultSets ?? []))
+                if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                   let resultSets = json["resultSets"] as? [[String: Any]],
+                   let headers = resultSets[0]["headers"] as? [String],
+                   let rowSet = resultSets[0]["rowSet"] as? [[Any]] {
+
+                    var headerIndexMap = [String: Int]()
+                    for (index, header) in headers.enumerated() {
+                        headerIndexMap[header] = index
+                    }
+
+                    var standings = [
+                        "league": ["League Standings", ""],
+                        "east": ["Eastern Conference Standings", ""],
+                        "west": ["Western Conference Standings", ""],
+                        "atlantic": ["Atlantic Division Standings", ""],
+                        "central": ["Central Division Standings", ""],
+                        "southeast": ["Southeast Division Standings", ""],
+                        "northwest": ["Northwest Division Standings", ""],
+                        "pacific": ["Pacific Division Standings", ""],
+                        "southwest": ["Southwest Division Standings", ""]
+                    ]
+
+                    // Process the data as needed for your application
+                    // Update the interaction reply accordingly
+
+                } else {
+                    // Handle the error, update the interaction reply accordingly
                 }
             } catch {
-                print(error.localizedDescription)
-                completed(.failure(NBAError.decodingError))
+                // Handle the error, update the interaction reply accordingly
             }
         }
         task.resume()
