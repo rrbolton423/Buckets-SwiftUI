@@ -9,11 +9,9 @@
 import Foundation
 
 class StandingsViewModel: ObservableObject {
-    @Published var standings: [ResultSets] = []
+    @Published var standings: [String : [Standing]] = [:]
     @Published var errorMessage: String?
     @Published var isShowingError = false
-    
-    let standingsEndpoint   = "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/leaguestandingsv3&LeagueID=00&Season=2023"
 
     init() {
         self.getStandings { results in
@@ -25,92 +23,108 @@ class StandingsViewModel: ObservableObject {
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
                 self.isShowingError = true
-                self.standings = []
+                self.standings = [:]
             }
         }
     }
-    
-    func getStandings(completed: @escaping (Result<[ResultSets], Error>) -> Void) {
+
+    func getStandings(completed: @escaping (Result<[String : [Standing]], Error>) -> Void) {
+        let standingsEndpoint = "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/leaguestandingsv3&LeagueID=00&Season=\(getLastYear)"
+
         guard let url = URL(string: standingsEndpoint) else {
             completed(.failure(NBAError.badUrl))
             return
         }
-        
+
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            
+
             if let _ = error {
                 completed(.failure(NBAError.invalidResponse))
                 return
             }
-            
+
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                 completed(.failure(NBAError.invalidResponse))
                 return
             }
-            
+
             guard let data = data else {
                 completed(.failure(NBAError.invalidData))
                 return
             }
-            
+
             do {
                 if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
                    let resultSets = json["resultSets"] as? [[String: Any]],
                    let headers = resultSets[0]["headers"] as? [String],
                    let rowSet = resultSets[0]["rowSet"] as? [[Any]] {
-                    
+
                     var headerIndexMap = [String: Int]()
                     for (index, header) in headers.enumerated() {
                         headerIndexMap[header] = index
                     }
-                    
-                    var standings = [
-                        "league": ["League Standings", ""],
-                        "east": ["Eastern Conference Standings", ""],
-                        "west": ["Western Conference Standings", ""],
-                        "atlantic": ["Atlantic Division Standings", ""],
-                        "central": ["Central Division Standings", ""],
-                        "southeast": ["Southeast Division Standings", ""],
-                        "northwest": ["Northwest Division Standings", ""],
-                        "pacific": ["Pacific Division Standings", ""],
-                        "southwest": ["Southwest Division Standings", ""]
+
+                    var standings: [String : [Standing]] = [
+                        "Eastern": [],
+                        "Western": []
                     ]
-                    
-                    var counter = 0
+                    var easternConferenceStandings = [Standing]()
+                    var westernConferenceStandings = [Standing]()
+
                     for teamData in rowSet {
                         guard let conference = teamData[headerIndexMap["Conference"]!] as? String,
                               let division = teamData[headerIndexMap["Division"]!] as? String else { continue }
-                        
-//                        if (["east", "west"].contains(setting) && setting != conference.lowercased()) ||
-//                            (["atlantic", "central", "southeast", "northwest", "pacific", "southwest"].contains(setting) && setting != division.lowercased()) {
-//                            continue
-//                        }
-                        
-                        if conference == "East" {
-                            print("Team Name = \(teamData[headerIndexMap["TeamName"]!]), Team City = \(teamData[headerIndexMap["TeamCity"]!])")
+
+                        let City = teamData[headerIndexMap["TeamCity"]!] as? String
+                        let Name = teamData[headerIndexMap["TeamName"]!] as? String
+                        let Conference = teamData[headerIndexMap["Conference"]!] as? String
+                        let Division = teamData[headerIndexMap["Division"]!] as? String
+
+                        let Wins = teamData[headerIndexMap["WINS"]!] as? Int
+                        let Losses = teamData[headerIndexMap["LOSSES"]!] as? Int
+                        let Percentage = teamData[headerIndexMap["WinPCT"]!] as? Float
+
+                        let ConferenceRecord = teamData[headerIndexMap["ConferenceRecord"]!] as? String
+                        let DivisionRecord = teamData[headerIndexMap["DivisionRecord"]!] as? String
+
+                        let HomeRecord = teamData[headerIndexMap["HOME"]!] as? String
+                        let AwayRecord = teamData[headerIndexMap["AWAY"]!] as? String
+                        let LastTenRecord = teamData[headerIndexMap["L10"]!] as? String
+
+                        let DivisionGamesBack = teamData[headerIndexMap["DivisionGamesBack"]!] as? Float
+
+                        let PlayoffRank = teamData[headerIndexMap["PlayoffRank"]!] as? Int
+                        let DivisionRank = teamData[headerIndexMap["DivisionRank"]!] as? Int
+
+                        let standing = Standing(City: City, Name: Name, Conference: Conference, Division: Division, Wins: Wins, Losses: Losses, Percentage: Percentage, ConferenceRecord: ConferenceRecord, DivisionRecord: DivisionRecord, HomeRecord: HomeRecord, AwayRecord: AwayRecord, LastTenRecord: LastTenRecord, DivisionGamesBack: DivisionGamesBack, PlayoffRank: PlayoffRank, DivisionRank: DivisionRank)
+
+                        if standing.Conference == "East" {
+                            easternConferenceStandings.append(standing)
                         }
-//                        print("TeamID = \(teamData[headerIndexMap["TeamID"]!])")
-                        
-                        counter += 1
-//                        // Assuming `team`, `record`, `pct`, `gb`, and `streak` are obtained from `teamData` using `headerIndexMap`
-//                        let tricode = teamNames[teamData[headerIndexMap["TeamID"]!] as! Int] ?? ""
-                        let rank = counter
-//                        print("rank = \(rank)")
-////                        let emoji = teamEmojis[tricode] ?? ""
-//                        let str2 = "\n`\(rank)` \(team) | \(record) \(pct) \(gb) \(streak)`"
-                        // Append `str2` to the appropriate place in `standings`
+                        else if standing.Conference == "West" {
+                            westernConferenceStandings.append(standing)
+                        }
                     }
-                    // Update the interaction reply accordingly
-                    
+
+                    standings.updateValue(easternConferenceStandings, forKey: "Eastern")
+                    standings.updateValue(westernConferenceStandings, forKey: "Western")
+                    completed(.success(standings))
+
                 } else {
-                    // Handle the error, update the interaction reply accordingly
+                    completed(.failure(NBAError.decodingError))
                 }
             } catch {
-                // Handle the error, update the interaction reply accordingly
+                print(error)
+                completed(.failure(NBAError.decodingError))
             }
         }
         task.resume()
     }
-}
- 
 
+    func getLastYear() -> String {
+        let currentYear = Calendar.current.component(.year, from: Date())
+        let lastYear = String(currentYear - 1)
+        print("lastYear : \(lastYear)")
+        return lastYear
+    }
+}

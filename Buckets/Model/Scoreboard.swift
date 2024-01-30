@@ -9,7 +9,7 @@
 import Foundation
 
 struct Scoreboard: Codable {
-
+    
     var games      : [Games]? = []
     
     enum CodingKeys: String, CodingKey {

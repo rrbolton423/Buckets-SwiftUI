@@ -80,7 +80,7 @@ struct Games: Codable {
 }
 
 extension Games: Hashable {
-
+    
     var identifier: String {
         return UUID().uuidString
     }
@@ -92,5 +92,5 @@ extension Games: Hashable {
     public static func == (lhs: Games, rhs: Games) -> Bool {
         return lhs.identifier == rhs.identifier
     }
-
+    
 }

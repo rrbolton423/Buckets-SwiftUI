@@ -18,15 +18,15 @@ struct StandingsView: View {
                 .padding()
             ConferencePicker(chosenConference: $chosenConference)
             TopBar()
-//            ScrollView(showsIndicators: false) {
-//                ForEach(StandingsVM.standings.sorted { $0.ConferenceRank! < $1.ConferenceRank! }, id: \.self) { team in
-//                    if team.Conference == chosenConference.rawValue {
-//                        TeamView(teamStandings: team, position: team.ConferenceRank!)
-//                            .padding(.horizontal)
-//                        Divider()
-//                    }
-//                }
-//            }
+            ScrollView(showsIndicators: false) {
+                ForEach(StandingsVM.standings[chosenConference.rawValue]?.sorted { $0.PlayoffRank! < $1.PlayoffRank! } ?? [], id: \.self) { team in
+                    if team.Conference == chosenConference.rawValue {
+                        TeamView(teamStandings: team, position: team.PlayoffRank!)
+                            .padding(.horizontal)
+                        Divider()
+                    }
+                }
+            }
         }
     }
 }
@@ -39,7 +39,7 @@ struct StandingsView_Previews: PreviewProvider {
 }
 
 struct TeamView: View {
-    let teamStandings: Standings
+    let teamStandings: Standing
     let position: Int
     @State private var showDetails = false
 
@@ -74,7 +74,7 @@ struct TeamView: View {
 
             HStack {
                 Spacer()
-                Text(String(format: "%.1f", teamStandings.GamesBack ?? 0).replacingOccurrences(of: ".0", with: ""))
+                Text(String(format: "%.1f", teamStandings.DivisionGamesBack ?? 0).replacingOccurrences(of: ".0", with: ""))
             }
             .frame(width: 40)
 
@@ -89,11 +89,11 @@ struct TeamView: View {
             HStack {
                 VStack(alignment: .leading) {
                     HStack(alignment: .center) {
-                        ComponentView(symbol: SFSymbols.home, symbolText: "Home", leftDigit: "\(teamStandings.HomeWins ?? 0)", rightDigit: "\(teamStandings.HomeLosses ?? 0)")
+                        ComponentView(symbol: SFSymbols.home, symbolText: "Home", record: "\(teamStandings.HomeRecord ?? "0 - 0")")
                         Spacer()
-                        ComponentView(symbol: SFSymbols.away, symbolText: "Away", leftDigit: "\(teamStandings.AwayWins ?? 0)", rightDigit: "\(teamStandings.AwayLosses ?? 0)")
+                        ComponentView(symbol: SFSymbols.away, symbolText: "Away", record: "\(teamStandings.AwayRecord ?? "0 - 0")")
                         Spacer()
-                        ComponentView(symbol: SFSymbols.lastTen, symbolText: "Last 10", leftDigit: "\(teamStandings.LastTenWins ?? 0)", rightDigit: "\(teamStandings.LastTenLosses ?? 0)")
+                        ComponentView(symbol: SFSymbols.lastTen, symbolText: "Last 10", record: "\(teamStandings.LastTenRecord ?? "0 - 0")")
                     }
                     .padding(.bottom)
 
@@ -101,14 +101,14 @@ struct TeamView: View {
                         VStack {
                             Text("\(teamStandings.Conference ?? "") Conference")
                                 .font(.headline)
-                            ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.ConferenceRank ?? 0)", leftDigit: "\(teamStandings.ConferenceWins ?? 0)", rightDigit: "\(teamStandings.ConferenceLosses ?? 0)")
+                            ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.PlayoffRank ?? 0)", record: "\(teamStandings.ConferenceRecord ?? "0 - 0")")
                         }
                         Spacer()
 
                         VStack {
                             Text("\(teamStandings.Division ?? "") Division")
                                 .font(.headline)
-                            ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.DivisionRank ?? 0)", leftDigit: "\(teamStandings.DivisionWins ?? 0)", rightDigit: "\(teamStandings.DivisionLosses ?? 0)")
+                            ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.DivisionRank ?? 0)", record: "\(teamStandings.DivisionRecord ?? "0 - 0")")
                         }
                     }
                 }
@@ -182,8 +182,7 @@ struct ConferencePicker: View {
 struct ComponentView: View {
     let symbol: String
     let symbolText: String
-    let leftDigit: String
-    let rightDigit: String
+    let record: String
 
     var body: some View {
         VStack {
@@ -195,7 +194,7 @@ struct ComponentView: View {
                 Text(symbolText)
                     .font(.headline)
             }
-            Text("\(leftDigit) - \(rightDigit)")
+            Text("\(record)")
                 .bold()
         }
     }

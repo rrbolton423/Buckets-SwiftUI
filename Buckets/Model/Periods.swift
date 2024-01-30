@@ -38,7 +38,7 @@ struct Periods: Codable {
 }
 
 extension Periods: Hashable {
-
+    
     var identifier: String {
         return UUID().uuidString
     }
@@ -50,5 +50,5 @@ extension Periods: Hashable {
     public static func == (lhs: Periods, rhs: Periods) -> Bool {
         return lhs.identifier == rhs.identifier
     }
-
+    
 }

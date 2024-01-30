@@ -9,7 +9,7 @@
 import Foundation
 
 struct Boxscores: Codable {
-
+    
     var scoreboard : Scoreboard? = Scoreboard()
     
     enum CodingKeys: String, CodingKey {
