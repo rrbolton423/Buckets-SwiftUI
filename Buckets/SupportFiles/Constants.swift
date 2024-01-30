@@ -170,7 +170,7 @@ enum Logos {
     static let OklahomaCityThunder      = Image("OKC")
     static let OrlandoMagic             = Image("ORL")
     static let Philadelphia76ers        = Image("PHI")
-    static let PhoenixSuns              = Image("PHO")
+    static let PhoenixSuns              = Image("PHX")
     static let PortlandTrailblazers     = Image("POR")
     static let SacramentoKings          = Image("SAC")
     static let SanAntonioSpurs          = Image("SAS")
@@ -213,5 +213,3 @@ let team: [Int: Image] = [
     30: Logos.SacramentoKings
 ]
 
-
-let apiKey = ""

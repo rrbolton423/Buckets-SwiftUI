@@ -31,14 +31,12 @@ struct StandingsView: View {
     }
 }
 
-
 struct StandingsView_Previews: PreviewProvider {
     static let vm = StandingsViewModel()
     static var previews: some View {
         StandingsView()
     }
 }
-
 
 struct TeamView: View {
     let teamStandings: Standings
@@ -125,7 +123,6 @@ struct TeamView: View {
     }
 }
 
-
 struct TopBar: View {
     var body: some View {
         HStack {
@@ -170,7 +167,6 @@ struct TopBar: View {
     }
 }
 
-
 struct ConferencePicker: View {
     @Binding var chosenConference: Conferences
     var body: some View {
@@ -182,7 +178,6 @@ struct ConferencePicker: View {
         .padding([.horizontal, .bottom])
     }
 }
-
 
 struct ComponentView: View {
     let symbol: String

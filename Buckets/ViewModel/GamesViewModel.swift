@@ -9,9 +9,9 @@
 import Foundation
 
 class GamesViewModel: ObservableObject {
-    @Published var yesterdaysGames = [Game]()
-    @Published var todaysGames = [Game]()
-    @Published var tomorrowsGames = [Game]()
+    @Published var yesterdaysGames = [Games]()
+    @Published var todaysGames = [Games]()
+    @Published var tomorrowsGames = [Games]()
 
     @Published var errorMessage: String?
     @Published var isShowingError = false
@@ -58,8 +58,8 @@ class GamesViewModel: ObservableObject {
         }
     }
 
-    func getGames(day: String, completed: @escaping (Result<[Game], Error>) -> Void) {
-        let endpoint = "https://api.sportsdata.io/api/nba/odds/json/GamesByDate/\(day)?key=\(apiKey)"
+    func getGames(day: String, completed: @escaping (Result<[Games], Error>) -> Void) {
+        let endpoint = "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/scoreboardv3&GameDate=\(day)&LeagueID=00"
 
         guard let url = URL(string: endpoint) else {
             completed(.failure(NBAError.badUrl))
@@ -83,10 +83,12 @@ class GamesViewModel: ObservableObject {
 
             let decoder = JSONDecoder()
             do {
-                let games = try decoder.decode([Game].self, from: data)
-                completed(.success(games))
+                let api = try decoder.decode(Boxscores.self, from: data)
+                if let games = api.scoreboard?.games {
+                    completed(.success(games))
+                }
             } catch {
-                print(error.localizedDescription)
+                print(error)
                 completed(.failure(NBAError.decodingError))
             }
         }
@@ -109,7 +111,7 @@ extension Date {
     }
     static func getDateString(date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MMM-dd"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: date)
     }
     static func getYearString() -> String {

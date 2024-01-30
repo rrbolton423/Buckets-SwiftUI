@@ -45,46 +45,45 @@ struct GamesView: View {
     }
 }
 
-
 struct GameView: View {
-    let game: Game
+    let game: Games
 
     @State private var isShowingDetails = false
 
     var body: some View {
         VStack {
             HStack {
-                team[game.AwayTeamID]!
+                Image(game.awayTeam?.teamTricode ?? "")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 70)
                     .frame(maxWidth: .infinity)
                 Spacer()
-                Text("\(game.AwayTeamScore ?? 0) - \(game.HomeTeamScore ?? 0)")
+                Text("\(game.awayTeam?.score ?? 0) - \(game.homeTeam?.score ?? 0)")
                     .font(.title)
                     .bold()
                     .lineLimit(1)
                     .minimumScaleFactor(0.01)
                 Spacer()
-                team[game.HomeTeamID]!
+                Image(game.homeTeam?.teamTricode ?? "")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 70)
                     .frame(maxWidth: .infinity)
             }
-            if game.Status == "InProgress" {
+            if game.gameStatus == 2 {
                 HStack {
-                    Text("Quarter: \(game.Quarter ?? "")")
-                    Text("\(game.TimeRemainingMinutes ?? 0):\(game.TimeRemainingSeconds ?? 0)")
+                    Text("Quarter: \(game.period ?? 0)")
+                    Text("\(game.gameClock ?? "")")
                 }
                 .font(.headline)
             } else {
-                Text(game.Status ?? "")
+                Text(game.gameStatusText ?? "")
                     .font(.headline)
             }
 
             if isShowingDetails {
-                QuartersView(quarters: game.Quarters, isShowingDetails: $isShowingDetails)
+                QuartersView(awayTeamPeriods: game.awayTeam?.periods ?? [], homeTeamPeriods: game.homeTeam?.periods ?? [], isShowingDetails: $isShowingDetails)
             }
 
         }
@@ -96,21 +95,21 @@ struct GameView: View {
     }
 }
 
-
 struct QuartersView: View {
-    let quarters: [Game.Quarter]
+    let awayTeamPeriods: [Periods]
+    let homeTeamPeriods: [Periods]
     @Binding var isShowingDetails: Bool
 
     var body: some View {
-        ForEach(quarters, id: \.self) { quarter in
+        ForEach(Array(zip(awayTeamPeriods, homeTeamPeriods)), id: \.0) { quarter in
             HStack {
-                if quarter.Name.starts(with: "OT") {
-                    Text(quarter.Name)
+                if quarter.0.period ?? 0 > 4 {
+                    Text("\(quarter.0.period ?? 0)")
                 } else {
-                    Text("Quarter \(quarter.Name)")
+                    Text("Quarter \(quarter.0.period ?? 0)")
                 }
                 Spacer()
-                Text("\(quarter.AwayScore ?? 0) - \(quarter.HomeScore ?? 0)")
+                Text("\(quarter.0.score ?? 0) - \(quarter.1.score ?? 0)")
             }
         }
         .font(.headline)

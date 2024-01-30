@@ -5,14 +5,15 @@
 //  Created by Romell Bolton on 1/26/24.
 //  Copyright © 2024 Romell Bolton. All rights reserved.
 //
+
 import Foundation
 
 class StandingsViewModel: ObservableObject {
-    @Published var standings: [Standings] = []
+    @Published var standings: [ResultSets] = []
     @Published var errorMessage: String?
     @Published var isShowingError = false
 
-    let standingsEndpoint   = "https://api.sportsdata.io/api/nba/odds/json/Standings/\(Date.getYearString())"
+    let standingsEndpoint   = "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/leaguestandingsv3&LeagueID=00&Season=2023"
 
     init() {
         self.getStandings { results in
@@ -29,17 +30,13 @@ class StandingsViewModel: ObservableObject {
         }
     }
 
-    func getStandings(completed: @escaping (Result<[Standings], Error>) -> Void) {
+    func getStandings(completed: @escaping (Result<[ResultSets], Error>) -> Void) {
         guard let url = URL(string: standingsEndpoint) else {
             completed(.failure(NBAError.badUrl))
             return
         }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue(apiKey, forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
 
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
 
             if let _ = error {
                 completed(.failure(NBAError.invalidResponse))
@@ -59,8 +56,10 @@ class StandingsViewModel: ObservableObject {
             let decoder = JSONDecoder()
 
             do {
-                let standings = try decoder.decode([Standings].self, from: data)
-                completed(.success(standings))
+                let standings = try decoder.decode(LeagueStandings.self, from: data)
+                if let resultSets = standings.resultSets {
+                    completed(.success(standings.resultSets ?? []))
+                }
             } catch {
                 print(error.localizedDescription)
                 completed(.failure(NBAError.decodingError))
