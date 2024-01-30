@@ -17,9 +17,12 @@ struct GamesView: View {
             HeaderView(text: "Games")
                 .padding()
             Picker("Days", selection: $chosenDay){
-                Text(GameDays.Yesterday.rawValue).tag(GameDays.Yesterday)
-                Text(GameDays.Today.rawValue).tag(GameDays.Today)
-                Text(GameDays.Tomorrow.rawValue).tag(GameDays.Tomorrow)
+                Text(GameDays.Yesterday.rawValue)
+                    .tag(GameDays.Yesterday)
+                Text(GameDays.Today.rawValue)
+                    .tag(GameDays.Today)
+                Text(GameDays.Tomorrow.rawValue)
+                    .tag(GameDays.Tomorrow)
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding([.horizontal, .bottom])

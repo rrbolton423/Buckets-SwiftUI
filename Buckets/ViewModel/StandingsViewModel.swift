@@ -80,7 +80,7 @@ class StandingsViewModel: ObservableObject {
 
                         let Wins = teamData[headerIndexMap["WINS"]!] as? Int
                         let Losses = teamData[headerIndexMap["LOSSES"]!] as? Int
-                        let Percentage = teamData[headerIndexMap["WinPCT"]!] as? Float
+                        let Percentage = teamData[headerIndexMap["WinPCT"]!] as? Double
 
                         let ConferenceRecord = teamData[headerIndexMap["ConferenceRecord"]!] as? String
                         let DivisionRecord = teamData[headerIndexMap["DivisionRecord"]!] as? String

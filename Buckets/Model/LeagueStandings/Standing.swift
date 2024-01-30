@@ -16,7 +16,7 @@ struct Standing: Codable, Hashable {
     
     let Wins: Int?
     let Losses: Int?
-    let Percentage: Float?
+    let Percentage: Double?
     
     let ConferenceRecord: String?
     let DivisionRecord: String?

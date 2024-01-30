@@ -68,13 +68,15 @@ struct TeamView: View {
 
             HStack {
                 Spacer()
-                Text(String(format: "%.1f", teamStandings.ConferenceGamesBack ?? 0).replacingOccurrences(of: ".0", with: ""))
+                Text(String(format: "%.2f",
+                    teamStandings.Percentage ?? 0).replacingOccurrences(of: "0.", with: "."))
             }
             .frame(width: 40)
-
+            
             HStack {
                 Spacer()
-                Text("\(teamStandings.LastTenRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression))
+                Text(String(format: "%.1f", teamStandings.ConferenceGamesBack ?? 0)
+                    .replacingOccurrences(of: ".0", with: ""))
             }
             .frame(width: 40)
 
@@ -89,11 +91,11 @@ struct TeamView: View {
             HStack {
                 VStack(alignment: .leading) {
                     HStack(alignment: .center) {
-                        ComponentView(symbol: SFSymbols.home, symbolText: "Home", record: "\(teamStandings.HomeRecord ?? "0 - 0")")
+                        ComponentView(symbol: SFSymbols.home, symbolText: "Home", record: "\(teamStandings.HomeRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression))
                         Spacer()
-                        ComponentView(symbol: SFSymbols.away, symbolText: "Away", record: "\(teamStandings.AwayRecord ?? "0 - 0")")
+                        ComponentView(symbol: SFSymbols.away, symbolText: "Away", record: "\(teamStandings.AwayRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression))
                         Spacer()
-                        ComponentView(symbol: SFSymbols.lastTen, symbolText: "Last 10", record: "\(teamStandings.LastTenRecord ?? "0 - 0")")
+                        ComponentView(symbol: SFSymbols.lastTen, symbolText: "Last 10", record: "\(teamStandings.LastTenRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression))
                     }
                     .padding(.bottom)
 
@@ -155,13 +157,13 @@ struct TopBar: View {
 
             HStack {
                 Spacer()
-                Text("GB")
+                Text("%")
             }
             .frame(width: 40)
 
             HStack {
                 Spacer()
-                Text("L10")
+                Text("GB")
             }
             .frame(width: 40)
 
@@ -200,7 +202,9 @@ struct ComponentView: View {
                 Text(symbolText)
                     .font(.headline)
             }
-            Text("\(record)".replacingOccurrences(of: "-", with: " - "))
+            Text("\(record)"
+                .replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression)
+                .replacingOccurrences(of: "-", with: " - "))
                 .bold()
         }
     }
