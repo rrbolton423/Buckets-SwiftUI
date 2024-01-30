@@ -89,7 +89,7 @@ class StandingsViewModel: ObservableObject {
                         let DivisionRecord = teamData[headerIndexMap["DivisionRecord"]!] as? String
 
                         let HomeRecord = teamData[headerIndexMap["HOME"]!] as? String
-                        let AwayRecord = teamData[headerIndexMap["AWAY"]!] as? String
+                        let AwayRecord = teamData[headerIndexMap["ROAD"]!] as? String
                         let LastTenRecord = teamData[headerIndexMap["L10"]!] as? String
 
                         let DivisionGamesBack = teamData[headerIndexMap["DivisionGamesBack"]!] as? Float
@@ -109,8 +109,11 @@ class StandingsViewModel: ObservableObject {
 
                     standings.updateValue(easternConferenceStandings, forKey: "Eastern")
                     standings.updateValue(westernConferenceStandings, forKey: "Western")
-                    completed(.success(standings))
-
+                    DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+                        DispatchQueue.main.async {
+                            completed(.success(standings))
+                        }
+                    }
                 } else {
                     completed(.failure(NBAError.decodingError))
                 }

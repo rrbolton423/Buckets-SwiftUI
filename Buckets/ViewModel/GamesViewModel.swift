@@ -85,7 +85,11 @@ class GamesViewModel: ObservableObject {
             do {
                 let api = try decoder.decode(Boxscores.self, from: data)
                 if let games = api.scoreboard?.games {
-                    completed(.success(games))
+                    DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+                        DispatchQueue.main.async {
+                            completed(.success(games))
+                        }
+                    }
                 }
             } catch {
                 print(error)

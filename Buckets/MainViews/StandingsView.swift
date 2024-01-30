@@ -20,7 +20,7 @@ struct StandingsView: View {
             TopBar()
             ScrollView(showsIndicators: false) {
                 ForEach(StandingsVM.standings[chosenConference.rawValue]?.sorted { $0.PlayoffRank! < $1.PlayoffRank! } ?? [], id: \.self) { team in
-                    if team.Conference == chosenConference.rawValue {
+                    if ((team.Conference?.contains(chosenConference.rawValue)) != nil) {
                         TeamView(teamStandings: team, position: team.PlayoffRank!)
                             .padding(.horizontal)
                         Divider()
@@ -99,8 +99,14 @@ struct TeamView: View {
 
                     HStack(alignment: .center) {
                         VStack {
-                            Text("\(teamStandings.Conference ?? "") Conference")
-                                .font(.headline)
+                            if teamStandings.Conference == "East" {
+                                Text("Eastern Conference")
+                                    .font(.headline)
+                            } 
+                            else if teamStandings.Conference == "West" {
+                                Text("Western Conference")
+                                    .font(.headline)
+                            }
                             ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.PlayoffRank ?? 0)", record: "\(teamStandings.ConferenceRecord ?? "0 - 0")")
                         }
                         Spacer()
