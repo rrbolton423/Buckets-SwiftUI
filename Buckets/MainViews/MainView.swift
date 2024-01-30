@@ -15,10 +15,10 @@ struct MainView: View {
                 .tabItem {
                     Label("Games", systemImage: SFSymbols.games)
                 }
-//            StandingsView()
-//                .tabItem {
-//                    Label("Standings", systemImage: SFSymbols.standings)
-//                }
+            StandingsView()
+                .tabItem {
+                    Label("Standings", systemImage: SFSymbols.standings)
+                }
             FavoriteView()
                 .tabItem {
                     Label("Favorite", systemImage: SFSymbols.favorites)
