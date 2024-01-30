@@ -25,7 +25,7 @@ struct Standing: Codable, Hashable {
     let AwayRecord: String?
     
     let LastTenRecord: String?
-    let DivisionGamesBack: Float?
+    let ConferenceGamesBack: Float?
     
     let PlayoffRank: Int?
     let DivisionRank: Int?

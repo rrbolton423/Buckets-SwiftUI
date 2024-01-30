@@ -68,13 +68,13 @@ struct TeamView: View {
 
             HStack {
                 Spacer()
-                Text(String(format: "%.2f", teamStandings.Percentage ?? 0).replacingOccurrences(of: "0.", with: "."))
+                Text(String(format: "%.1f", teamStandings.ConferenceGamesBack ?? 0).replacingOccurrences(of: ".0", with: ""))
             }
             .frame(width: 40)
 
             HStack {
                 Spacer()
-                Text(String(format: "%.1f", teamStandings.DivisionGamesBack ?? 0).replacingOccurrences(of: ".0", with: ""))
+                Text("\(teamStandings.LastTenRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression))
             }
             .frame(width: 40)
 
@@ -155,13 +155,13 @@ struct TopBar: View {
 
             HStack {
                 Spacer()
-                Text("%")
+                Text("GB")
             }
             .frame(width: 40)
 
             HStack {
                 Spacer()
-                Text("D")
+                Text("L10")
             }
             .frame(width: 40)
 
@@ -200,7 +200,7 @@ struct ComponentView: View {
                 Text(symbolText)
                     .font(.headline)
             }
-            Text("\(record)")
+            Text("\(record)".replacingOccurrences(of: "-", with: " - "))
                 .bold()
         }
     }

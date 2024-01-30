@@ -73,9 +73,6 @@ class StandingsViewModel: ObservableObject {
                     var westernConferenceStandings = [Standing]()
 
                     for teamData in rowSet {
-                        guard let conference = teamData[headerIndexMap["Conference"]!] as? String,
-                              let division = teamData[headerIndexMap["Division"]!] as? String else { continue }
-
                         let City = teamData[headerIndexMap["TeamCity"]!] as? String
                         let Name = teamData[headerIndexMap["TeamName"]!] as? String
                         let Conference = teamData[headerIndexMap["Conference"]!] as? String
@@ -92,12 +89,12 @@ class StandingsViewModel: ObservableObject {
                         let AwayRecord = teamData[headerIndexMap["ROAD"]!] as? String
                         let LastTenRecord = teamData[headerIndexMap["L10"]!] as? String
 
-                        let DivisionGamesBack = teamData[headerIndexMap["DivisionGamesBack"]!] as? Float
+                        let ConferenceGamesBack = teamData[headerIndexMap["ConferenceGamesBack"]!] as? Float
 
                         let PlayoffRank = teamData[headerIndexMap["PlayoffRank"]!] as? Int
                         let DivisionRank = teamData[headerIndexMap["DivisionRank"]!] as? Int
 
-                        let standing = Standing(City: City, Name: Name, Conference: Conference, Division: Division, Wins: Wins, Losses: Losses, Percentage: Percentage, ConferenceRecord: ConferenceRecord, DivisionRecord: DivisionRecord, HomeRecord: HomeRecord, AwayRecord: AwayRecord, LastTenRecord: LastTenRecord, DivisionGamesBack: DivisionGamesBack, PlayoffRank: PlayoffRank, DivisionRank: DivisionRank)
+                        let standing = Standing(City: City, Name: Name, Conference: Conference, Division: Division, Wins: Wins, Losses: Losses, Percentage: Percentage, ConferenceRecord: ConferenceRecord, DivisionRecord: DivisionRecord, HomeRecord: HomeRecord, AwayRecord: AwayRecord, LastTenRecord: LastTenRecord, ConferenceGamesBack: ConferenceGamesBack, PlayoffRank: PlayoffRank, DivisionRank: DivisionRank)
 
                         if standing.Conference == "East" {
                             easternConferenceStandings.append(standing)
@@ -128,7 +125,6 @@ class StandingsViewModel: ObservableObject {
     func getSeasonStartYear() -> String {
         let currentYear = Calendar.current.component(.year, from: Date())
         let lastYear = String(currentYear - 1)
-        print("lastYear : \(lastYear)")
         return lastYear
     }
 }
