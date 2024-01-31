@@ -74,6 +74,9 @@ struct GameView: View {
                     .frame(height: 70)
                     .frame(maxWidth: .infinity)
             }
+            
+            Spacer()
+
             if game.gameStatus == 2 {
                 HStack {
                     Text("Quarter: \(game.period ?? 0)")
@@ -84,6 +87,8 @@ struct GameView: View {
                 Text(game.gameStatusText ?? "")
                     .font(.headline)
             }
+
+            Spacer()
 
             if isShowingDetails {
                 QuartersView(awayTeamPeriods: game.awayTeam?.periods ?? [], homeTeamPeriods: game.homeTeam?.periods ?? [], isShowingDetails: $isShowingDetails)

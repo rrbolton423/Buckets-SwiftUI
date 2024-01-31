@@ -104,10 +104,14 @@ struct TeamView: View {
                             if teamStandings.Conference == "East" {
                                 Text("Eastern Conference")
                                     .font(.headline)
-                            } 
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.01)
+                            }
                             else if teamStandings.Conference == "West" {
                                 Text("Western Conference")
                                     .font(.headline)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.01)
                             }
                             ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.PlayoffRank ?? 0)", record: "\(teamStandings.ConferenceRecord ?? "0 - 0")")
                         }
@@ -116,6 +120,8 @@ struct TeamView: View {
                         VStack {
                             Text("\(teamStandings.Division ?? "") Division")
                                 .font(.headline)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.01)
                             ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.DivisionRank ?? 0)", record: "\(teamStandings.DivisionRecord ?? "0 - 0")")
                         }
                     }
@@ -195,17 +201,23 @@ struct ComponentView: View {
     var body: some View {
         VStack {
             HStack {
+                Spacer()
                 Image(systemName: symbol)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 22, height: 22)
                 Text(symbolText)
                     .font(.headline)
+                Spacer()
             }
-            Text("\(record)"
-                .replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression)
-                .replacingOccurrences(of: "-", with: " - "))
-                .bold()
+            HStack {
+                Spacer()
+                Text("\(record)"
+                    .replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression)
+                    .replacingOccurrences(of: "-", with: " - "))
+                    .bold()
+                Spacer()
+            }
         }
     }
 }
