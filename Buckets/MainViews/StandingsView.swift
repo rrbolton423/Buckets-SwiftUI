@@ -79,7 +79,6 @@ struct TeamView: View {
                     .replacingOccurrences(of: ".0", with: ""))
             }
             .frame(width: 40)
-
         }
         .lineLimit(1)
         .minimumScaleFactor(0.01)
