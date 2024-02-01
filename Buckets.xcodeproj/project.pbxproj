@@ -16,6 +16,7 @@
 		549AF8AC2B68D4490080C080 /* LeagueStandings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549AF8AB2B68D4490080C080 /* LeagueStandings.swift */; };
 		549AF8AE2B68D5360080C080 /* ResultSets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549AF8AD2B68D5360080C080 /* ResultSets.swift */; };
 		E206EFD62B6454B20078A3B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E206EFD52B6454B20078A3B7 /* LaunchScreen.storyboard */; };
+		E27366E62B6C6317000C49BC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27366E52B6C6317000C49BC /* Extensions.swift */; };
 		E2FA08842B6440420071D0DD /* BucketsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FA08832B6440420071D0DD /* BucketsApp.swift */; };
 		E2FA08882B6440450071D0DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2FA08872B6440450071D0DD /* Assets.xcassets */; };
 		E2FA088B2B6440450071D0DD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2FA088A2B6440450071D0DD /* Preview Assets.xcassets */; };
@@ -40,6 +41,7 @@
 		549AF8AB2B68D4490080C080 /* LeagueStandings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueStandings.swift; sourceTree = "<group>"; };
 		549AF8AD2B68D5360080C080 /* ResultSets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSets.swift; sourceTree = "<group>"; };
 		E206EFD52B6454B20078A3B7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E27366E52B6C6317000C49BC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E2FA08802B6440420071D0DD /* Buckets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buckets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2FA08832B6440420071D0DD /* BucketsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketsApp.swift; sourceTree = "<group>"; };
 		E2FA08872B6440450071D0DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -66,6 +68,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E27366E72B6C631D000C49BC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E27366E52B6C6317000C49BC /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E29CBB482B699AA4000B17E1 /* Boxscores */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +121,7 @@
 				E2FA08832B6440420071D0DD /* BucketsApp.swift */,
 				E206EFD52B6454B20078A3B7 /* LaunchScreen.storyboard */,
 				E2FA08A52B6443B70071D0DD /* ComponentViews */,
+				E27366E72B6C631D000C49BC /* Extensions */,
 				E2FA08A62B6443C60071D0DD /* MainViews */,
 				E2FA08A72B6443CF0071D0DD /* Model */,
 				E2FA08A92B6443E20071D0DD /* SupportFiles */,
@@ -252,6 +263,7 @@
 				549AF8A62B68C3F70080C080 /* Games.swift in Sources */,
 				549AF8A82B68C4170080C080 /* HomeTeam.swift in Sources */,
 				E2FA089A2B6440710071D0DD /* StandingsView.swift in Sources */,
+				E27366E62B6C6317000C49BC /* Extensions.swift in Sources */,
 				549AF8AE2B68D5360080C080 /* ResultSets.swift in Sources */,
 				E2FA08962B6440670071D0DD /* GamesView.swift in Sources */,
 				E2FA08A22B64408B0071D0DD /* GamesViewModel.swift in Sources */,
@@ -394,7 +406,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Buckets/Preview Content\"";
 				DEVELOPMENT_TEAM = XQ87AL2NL5;
 				ENABLE_PREVIEWS = YES;
@@ -427,7 +439,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Buckets/Preview Content\"";
 				DEVELOPMENT_TEAM = XQ87AL2NL5;
 				ENABLE_PREVIEWS = YES;

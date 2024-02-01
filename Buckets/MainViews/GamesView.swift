@@ -13,47 +13,50 @@ struct GamesView: View {
     @State private var chosenDay: GameDays = .Today
 
     var body: some View {
-
         VStack {
             HeaderView(text: "Games")
                 .padding()
-            Picker("Days", selection: $chosenDay){
-                Text(GameDays.Yesterday.rawValue)
-                    .tag(GameDays.Yesterday)
-                Text(GameDays.Today.rawValue)
-                    .tag(GameDays.Today)
-                Text(GameDays.Tomorrow.rawValue)
-                    .tag(GameDays.Tomorrow)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding([.horizontal, .bottom])
-
-            ScrollView(showsIndicators: false) {
-                switch chosenDay {
-                case .Yesterday:
-                    ForEach(gamesViewModel.yesterdaysGames, id: \.self) { game in
-                        GameView(game: game)
-                    }
-                case .Today:
-                    ForEach(gamesViewModel.todaysGames, id: \.self) { game in
-                        GameView(game: game)
-                    }
-                case .Tomorrow:
-                    ForEach(gamesViewModel.tomorrowsGames, id: \.self) { game in
-                        GameView(game: game)
+            switch gamesViewModel.state {
+            case .idle:
+                Color.clear
+            case .loading:
+                Spacer()
+                ProgressView()
+                Spacer()
+            case .failed(let error):
+                Spacer()
+                Text(error.localizedDescription)
+                Spacer()
+            case .loaded(let games):
+                Picker("Days", selection: $chosenDay){
+                    Text(GameDays.Yesterday.rawValue)
+                        .tag(GameDays.Yesterday)
+                    Text(GameDays.Today.rawValue)
+                        .tag(GameDays.Today)
+                    Text(GameDays.Tomorrow.rawValue)
+                        .tag(GameDays.Tomorrow)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding([.horizontal, .bottom])
+                ScrollView(showsIndicators: false) {
+                    switch chosenDay {
+                    case .Yesterday:
+                        ForEach(games, id: \.self) { game in
+                            GameView(game: game)
+                        }
+                    case .Today:
+                        ForEach(games, id: \.self) { game in
+                            GameView(game: game)
+                        }
+                    case .Tomorrow:
+                        ForEach(games, id: \.self) { game in
+                            GameView(game: game)
+                        }
                     }
                 }
+                .padding()
             }
-            .padding()
         }
-        .overlay(Group {
-            if gamesViewModel.isLoading {
-                ProgressView()
-            }
-            if gamesViewModel.isShowingError {
-                Text(gamesViewModel.errorMessage ?? "Error")
-            }
-        })
     }
 }
 
@@ -83,7 +86,7 @@ struct GameView: View {
                     .frame(height: 70)
                     .frame(maxWidth: .infinity)
             }
-            
+
             Spacer()
 
             if game.gameStatus == 2 {

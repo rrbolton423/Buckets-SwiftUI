@@ -9,7 +9,7 @@
 import Foundation
 
 struct Games: Codable {
-    
+
     var gameId            : String?       = nil
     var gameCode          : String?       = nil
     var gameStatus        : Int?          = nil
@@ -27,9 +27,9 @@ struct Games: Codable {
     var gameSubtype       : String?       = nil
     var homeTeam          : HomeTeam?     = HomeTeam()
     var awayTeam          : AwayTeam?     = AwayTeam()
-    
+
     enum CodingKeys: String, CodingKey {
-        
+
         case gameId            = "gameId"
         case gameCode          = "gameCode"
         case gameStatus        = "gameStatus"
@@ -47,12 +47,12 @@ struct Games: Codable {
         case gameSubtype       = "gameSubtype"
         case homeTeam          = "homeTeam"
         case awayTeam          = "awayTeam"
-        
+
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         gameId            = try values.decodeIfPresent(String.self       , forKey: .gameId            )
         gameCode          = try values.decodeIfPresent(String.self       , forKey: .gameCode          )
         gameStatus        = try values.decodeIfPresent(Int.self          , forKey: .gameStatus        )
@@ -70,27 +70,27 @@ struct Games: Codable {
         gameSubtype       = try values.decodeIfPresent(String.self       , forKey: .gameSubtype       )
         homeTeam          = try values.decodeIfPresent(HomeTeam.self     , forKey: .homeTeam          )
         awayTeam          = try values.decodeIfPresent(AwayTeam.self     , forKey: .awayTeam          )
-        
+
     }
-    
+
     init() {
-        
+
     }
-    
+
 }
 
 extension Games: Hashable {
-    
+
     var identifier: String {
         return UUID().uuidString
     }
-    
+
     public func hash(into hasher: inout Hasher) {
         return hasher.combine(identifier)
     }
-    
+
     public static func == (lhs: Games, rhs: Games) -> Bool {
         return lhs.identifier == rhs.identifier
     }
-    
+
 }

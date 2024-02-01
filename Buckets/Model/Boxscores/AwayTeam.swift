@@ -9,7 +9,7 @@
 import Foundation
 
 struct AwayTeam: Codable {
-    
+
     var teamId            : Int?       = nil
     var teamName          : String?    = nil
     var teamCity          : String?    = nil
@@ -22,9 +22,9 @@ struct AwayTeam: Codable {
     var inBonus           : String?    = nil
     var timeoutsRemaining : Int?       = nil
     var periods           : [Periods]? = []
-    
+
     enum CodingKeys: String, CodingKey {
-        
+
         case teamId            = "teamId"
         case teamName          = "teamName"
         case teamCity          = "teamCity"
@@ -37,12 +37,12 @@ struct AwayTeam: Codable {
         case inBonus           = "inBonus"
         case timeoutsRemaining = "timeoutsRemaining"
         case periods           = "periods"
-        
+
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         teamId            = try values.decodeIfPresent(Int.self       , forKey: .teamId            )
         teamName          = try values.decodeIfPresent(String.self    , forKey: .teamName          )
         teamCity          = try values.decodeIfPresent(String.self    , forKey: .teamCity          )
@@ -55,11 +55,11 @@ struct AwayTeam: Codable {
         inBonus           = try values.decodeIfPresent(String.self    , forKey: .inBonus           )
         timeoutsRemaining = try values.decodeIfPresent(Int.self       , forKey: .timeoutsRemaining )
         periods           = try values.decodeIfPresent([Periods].self , forKey: .periods           )
-        
+
     }
-    
+
     init() {
-        
+
     }
-    
+
 }

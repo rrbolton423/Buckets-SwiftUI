@@ -9,24 +9,24 @@
 import Foundation
 
 struct LeagueStandings: Codable {
-    
+
     var resultSets : [ResultSets]? = []
-    
+
     enum CodingKeys: String, CodingKey {
-        
+
         case resultSets = "resultSets"
-        
+
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         resultSets = try values.decodeIfPresent([ResultSets].self , forKey: .resultSets )
-        
+
     }
-    
+
     init() {
-        
+
     }
-    
+
 }

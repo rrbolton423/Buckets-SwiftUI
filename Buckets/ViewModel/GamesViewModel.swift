@@ -9,27 +9,25 @@
 import Foundation
 
 class GamesViewModel: ObservableObject {
-    @Published var yesterdaysGames = [Games]()
-    @Published var todaysGames = [Games]()
-    @Published var tomorrowsGames = [Games]()
-    @Published var errorMessage: String?
-    @Published var isShowingError = false
-    @Published var isLoading = true
-
+    enum State {
+        case idle
+        case loading
+        case failed(Error)
+        case loaded([Games])
+    }
+    
+    @Published private(set) var state = State.idle
+    
     init() {
         self.getGames(day: Date.getDateString(date: Date.yesterday)) { results in
             switch results {
             case .success(let games):
                 DispatchQueue.main.async {
-                    self.yesterdaysGames = games
-                    self.isLoading = false
+                    self.state = .loaded(games)
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.errorMessage = error.localizedDescription
-                    self.isShowingError = true
-                    self.yesterdaysGames = []
-                    self.isLoading = false
+                    self.state = .failed(error)
                 }
             }
         }
@@ -38,15 +36,11 @@ class GamesViewModel: ObservableObject {
             switch results {
             case .success(let games):
                 DispatchQueue.main.async {
-                    self.todaysGames = games
-                    self.isLoading = false
+                    self.state = .loaded(games)
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.errorMessage = error.localizedDescription
-                    self.isShowingError = true
-                    self.todaysGames = []
-                    self.isLoading = false
+                    self.state = .failed(error)
                 }
             }
         }
@@ -55,15 +49,11 @@ class GamesViewModel: ObservableObject {
             switch results {
             case .success(let games):
                 DispatchQueue.main.async {
-                    self.tomorrowsGames = games
-                    self.isLoading = false
+                    self.state = .loaded(games)
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.errorMessage = error.localizedDescription
-                    self.isShowingError = true
-                    self.tomorrowsGames = []
-                    self.isLoading = false
+                    self.state = .failed(error)
                 }
             }
         }
@@ -104,29 +94,5 @@ class GamesViewModel: ObservableObject {
             }
         }
         task.resume()
-    }
-}
-
-extension Date {
-    static var yesterday: Date { return Date().dayBefore }
-    static var today: Date { return Date() }
-    static var tomorrow:  Date { return Date().dayAfter }
-    var dayBefore: Date {
-        return Calendar.current.date(byAdding: .day, value: -1, to: noon)!
-    }
-    var dayAfter: Date {
-        return Calendar.current.date(byAdding: .day, value: 1, to: noon)!
-    }
-    var noon: Date {
-        return Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)!
-    }
-    static func getDateString(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.string(from: date)
-    }
-    static func getYearString() -> String {
-        let year = Calendar.current.component(.year, from: Date())
-        return "\(year)"
     }
 }

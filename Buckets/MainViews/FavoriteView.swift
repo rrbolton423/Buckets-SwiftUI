@@ -10,7 +10,7 @@ import SwiftUI
 
 struct FavoriteView: View {
     @AppStorage("FavoriteTeam") private var favoriteTeam: Teams = .AtlantaHawks
-    
+
     var body: some View {
         VStack {
             HeaderView(text: "Favorite Team")

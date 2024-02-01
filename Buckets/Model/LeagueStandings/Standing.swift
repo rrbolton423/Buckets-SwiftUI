@@ -13,20 +13,20 @@ struct Standing: Codable, Hashable {
     let Name: String?
     let Conference: String?
     let Division: String?
-    
+
     let Wins: Int?
     let Losses: Int?
     let Percentage: Double?
-    
+
     let ConferenceRecord: String?
     let DivisionRecord: String?
-    
+
     let HomeRecord: String?
     let AwayRecord: String?
     
     let LastTenRecord: String?
     let ConferenceGamesBack: Float?
-    
+
     let PlayoffRank: Int?
     let DivisionRank: Int?
 }

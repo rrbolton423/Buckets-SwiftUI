@@ -9,31 +9,32 @@
 import Foundation
 
 class StandingsViewModel: ObservableObject {
-    @Published var standings: [String : [Standing]] = [:]
-    @Published var errorMessage: String?
-    @Published var isShowingError = false
-    @Published var isLoading = true
+    enum State {
+        case idle
+        case loading
+        case failed(Error)
+        case loaded([String : [Standing]])
+    }
+
+    @Published private(set) var state = State.idle
 
     init() {
         self.getStandings { results in
             switch results {
-            case .success(let results):
+            case .success(let standings):
                 DispatchQueue.main.async {
-                    self.standings = results
-                    self.isLoading = false
+                    self.state = .loaded(standings)
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.errorMessage = error.localizedDescription
-                    self.isShowingError = true
-                    self.standings = [:]
-                    self.isLoading = false
+                    self.state = .failed(error)
                 }
             }
         }
     }
 
     func getStandings(completed: @escaping (Result<[String : [Standing]], Error>) -> Void) {
+        state = .loading
         let seasonStartYear = getSeasonStartYear()
         let standingsEndpoint = "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/leaguestandingsv3&LeagueID=00&Season=\(seasonStartYear)"
 
