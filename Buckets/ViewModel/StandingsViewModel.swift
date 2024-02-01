@@ -21,9 +21,11 @@ class StandingsViewModel: ObservableObject {
                     self.standings = results
                 }
             case .failure(let error):
-                self.errorMessage = error.localizedDescription
-                self.isShowingError = true
-                self.standings = [:]
+                DispatchQueue.main.async {
+                    self.errorMessage = error.localizedDescription
+                    self.isShowingError = true
+                    self.standings = [:]
+                }
             }
         }
     }
@@ -106,13 +108,7 @@ class StandingsViewModel: ObservableObject {
 
                     standings.updateValue(easternConferenceStandings, forKey: "Eastern")
                     standings.updateValue(westernConferenceStandings, forKey: "Western")
-                    DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-                        DispatchQueue.main.async {
-                            completed(.success(standings))
-                        }
-                    }
-                } else {
-                    completed(.failure(NBAError.decodingError))
+                    completed(.success(standings))
                 }
             } catch {
                 print(error)

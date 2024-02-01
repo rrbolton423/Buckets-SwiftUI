@@ -25,9 +25,11 @@ class GamesViewModel: ObservableObject {
                     self.yesterdaysGames = games
                 }
             case .failure(let error):
-                self.errorMessage = error.localizedDescription
-                self.isShowingError = true
-                self.yesterdaysGames = []
+                DispatchQueue.main.async {
+                    self.errorMessage = error.localizedDescription
+                    self.isShowingError = true
+                    self.yesterdaysGames = []
+                }
             }
         }
         
@@ -38,9 +40,11 @@ class GamesViewModel: ObservableObject {
                     self.todaysGames = games
                 }
             case .failure(let error):
-                self.errorMessage = error.localizedDescription
-                self.isShowingError = true
-                self.todaysGames = []
+                DispatchQueue.main.async {
+                    self.errorMessage = error.localizedDescription
+                    self.isShowingError = true
+                    self.todaysGames = []
+                }
             }
         }
         
@@ -51,9 +55,11 @@ class GamesViewModel: ObservableObject {
                     self.tomorrowsGames = games
                 }
             case .failure(let error):
-                self.errorMessage = error.localizedDescription
-                self.isShowingError = true
-                self.tomorrowsGames = []
+                DispatchQueue.main.async {
+                    self.errorMessage = error.localizedDescription
+                    self.isShowingError = true
+                    self.tomorrowsGames = []
+                }
             }
         }
     }
@@ -85,11 +91,7 @@ class GamesViewModel: ObservableObject {
             do {
                 let api = try decoder.decode(Boxscores.self, from: data)
                 if let games = api.scoreboard?.games {
-                    DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-                        DispatchQueue.main.async {
-                            completed(.success(games))
-                        }
-                    }
+                    completed(.success(games))
                 }
             } catch {
                 print(error)
