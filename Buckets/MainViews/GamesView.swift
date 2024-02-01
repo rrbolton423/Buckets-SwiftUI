@@ -9,10 +9,11 @@
 import SwiftUI
 
 struct GamesView: View {
-    @StateObject var gamesVM = GamesViewModel()
+    @StateObject var gamesViewModel = GamesViewModel()
     @State private var chosenDay: GameDays = .Today
 
     var body: some View {
+
         VStack {
             HeaderView(text: "Games")
                 .padding()
@@ -30,21 +31,29 @@ struct GamesView: View {
             ScrollView(showsIndicators: false) {
                 switch chosenDay {
                 case .Yesterday:
-                    ForEach(gamesVM.yesterdaysGames, id: \.self) { game in
+                    ForEach(gamesViewModel.yesterdaysGames, id: \.self) { game in
                         GameView(game: game)
                     }
                 case .Today:
-                    ForEach(gamesVM.todaysGames, id: \.self) { game in
+                    ForEach(gamesViewModel.todaysGames, id: \.self) { game in
                         GameView(game: game)
                     }
                 case .Tomorrow:
-                    ForEach(gamesVM.tomorrowsGames, id: \.self) { game in
+                    ForEach(gamesViewModel.tomorrowsGames, id: \.self) { game in
                         GameView(game: game)
                     }
                 }
             }
             .padding()
         }
+        .overlay(Group {
+            if gamesViewModel.isLoading {
+                ProgressView()
+            }
+            if gamesViewModel.isShowingError {
+                Text(gamesViewModel.errorMessage ?? "Error")
+            }
+        })
     }
 }
 

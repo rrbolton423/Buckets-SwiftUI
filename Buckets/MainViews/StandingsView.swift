@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct StandingsView: View {
-    @StateObject private var StandingsVM = StandingsViewModel()
+    @StateObject private var standingsViewModel = StandingsViewModel()
     @State private var chosenConference = Conferences.Western
 
     var body: some View {
@@ -19,7 +19,7 @@ struct StandingsView: View {
             ConferencePicker(chosenConference: $chosenConference)
             TopBar()
             ScrollView(showsIndicators: false) {
-                ForEach(StandingsVM.standings[chosenConference.rawValue]?.sorted { $0.PlayoffRank! < $1.PlayoffRank! } ?? [], id: \.self) { team in
+                ForEach(standingsViewModel.standings[chosenConference.rawValue]?.sorted { $0.PlayoffRank! < $1.PlayoffRank! } ?? [], id: \.self) { team in
                     if ((team.Conference?.contains(chosenConference.rawValue)) != nil) {
                         TeamView(teamStandings: team, position: team.PlayoffRank!)
                             .padding(.horizontal)
@@ -28,6 +28,14 @@ struct StandingsView: View {
                 }
             }
         }
+        .overlay(Group {
+            if standingsViewModel.isLoading {
+                ProgressView()
+            }
+            if standingsViewModel.isShowingError {
+                Text(standingsViewModel.errorMessage ?? "The operation couldn’t be completed.")
+            }
+        })
     }
 }
 

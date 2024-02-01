@@ -12,6 +12,7 @@ class StandingsViewModel: ObservableObject {
     @Published var standings: [String : [Standing]] = [:]
     @Published var errorMessage: String?
     @Published var isShowingError = false
+    @Published var isLoading = true
 
     init() {
         self.getStandings { results in
@@ -19,12 +20,14 @@ class StandingsViewModel: ObservableObject {
             case .success(let results):
                 DispatchQueue.main.async {
                     self.standings = results
+                    self.isLoading = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.errorMessage = error.localizedDescription
                     self.isShowingError = true
                     self.standings = [:]
+                    self.isLoading = false
                 }
             }
         }

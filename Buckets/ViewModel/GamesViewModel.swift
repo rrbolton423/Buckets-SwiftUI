@@ -12,23 +12,24 @@ class GamesViewModel: ObservableObject {
     @Published var yesterdaysGames = [Games]()
     @Published var todaysGames = [Games]()
     @Published var tomorrowsGames = [Games]()
-    
     @Published var errorMessage: String?
     @Published var isShowingError = false
-    
-    
+    @Published var isLoading = true
+
     init() {
         self.getGames(day: Date.getDateString(date: Date.yesterday)) { results in
             switch results {
             case .success(let games):
                 DispatchQueue.main.async {
                     self.yesterdaysGames = games
+                    self.isLoading = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.errorMessage = error.localizedDescription
                     self.isShowingError = true
                     self.yesterdaysGames = []
+                    self.isLoading = false
                 }
             }
         }
@@ -38,12 +39,14 @@ class GamesViewModel: ObservableObject {
             case .success(let games):
                 DispatchQueue.main.async {
                     self.todaysGames = games
+                    self.isLoading = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.errorMessage = error.localizedDescription
                     self.isShowingError = true
                     self.todaysGames = []
+                    self.isLoading = false
                 }
             }
         }
@@ -53,12 +56,14 @@ class GamesViewModel: ObservableObject {
             case .success(let games):
                 DispatchQueue.main.async {
                     self.tomorrowsGames = games
+                    self.isLoading = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.errorMessage = error.localizedDescription
                     self.isShowingError = true
                     self.tomorrowsGames = []
+                    self.isLoading = false
                 }
             }
         }
