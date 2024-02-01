@@ -13,10 +13,11 @@ struct HeaderView: View {
     var body: some View {
         VStack {
             HStack {
-                Image("AppIcon2")
+                Image("Buckets")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 60)
+                    .clipShape(Circle())
                 Text(text)
                     .font(.largeTitle)
                     .fontWeight(.bold)

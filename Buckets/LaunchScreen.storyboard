@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIcon2" translatesAutoresizingMaskIntoConstraints="NO" id="fTv-MU-XKD">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Buckets" translatesAutoresizingMaskIntoConstraints="NO" id="fTv-MU-XKD">
                                 <rect key="frame" x="115" y="366" width="200" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="aTc-fF-NiP"/>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AppIcon2" width="500" height="500"/>
+        <image name="Buckets" width="500" height="500"/>
     </resources>
 </document>

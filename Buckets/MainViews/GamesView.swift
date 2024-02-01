@@ -80,7 +80,8 @@ struct GameView: View {
             if game.gameStatus == 2 {
                 HStack {
                     Text("Quarter: \(game.period ?? 0)")
-                    Text("\(game.gameClock ?? "")")
+                    Text("\(game.gameClock ?? "")"
+                        .trimmingCharacters(in: .whitespacesAndNewlines))
                 }
                 .font(.headline)
             } else {
