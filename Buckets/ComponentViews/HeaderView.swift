@@ -17,6 +17,7 @@ struct HeaderView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 60)
+                    .padding(-9)
                     .clipShape(Circle())
                 Text(text)
                     .font(.largeTitle)
