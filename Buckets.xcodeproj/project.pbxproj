@@ -71,7 +71,6 @@
 		E27366E72B6C631D000C49BC /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E27366E52B6C6317000C49BC /* Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -119,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				E2FA08832B6440420071D0DD /* BucketsApp.swift */,
-				E206EFD52B6454B20078A3B7 /* LaunchScreen.storyboard */,
 				E2FA08A52B6443B70071D0DD /* ComponentViews */,
 				E27366E72B6C631D000C49BC /* Extensions */,
 				E2FA08A62B6443C60071D0DD /* MainViews */,
@@ -150,6 +148,7 @@
 		E2FA08A62B6443C60071D0DD /* MainViews */ = {
 			isa = PBXGroup;
 			children = (
+				E206EFD52B6454B20078A3B7 /* LaunchScreen.storyboard */,
 				E2FA08932B6440620071D0DD /* FavoriteView.swift */,
 				E2FA08952B6440670071D0DD /* GamesView.swift */,
 				E2FA08972B64406C0071D0DD /* MainView.swift */,
@@ -181,6 +180,7 @@
 			children = (
 				E2FA08872B6440450071D0DD /* Assets.xcassets */,
 				E2FA089F2B6440840071D0DD /* Constants.swift */,
+				E27366E52B6C6317000C49BC /* Extensions.swift */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -406,7 +406,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Buckets/Preview Content\"";
 				DEVELOPMENT_TEAM = XQ87AL2NL5;
 				ENABLE_PREVIEWS = YES;
@@ -439,7 +439,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Buckets/Preview Content\"";
 				DEVELOPMENT_TEAM = XQ87AL2NL5;
 				ENABLE_PREVIEWS = YES;
