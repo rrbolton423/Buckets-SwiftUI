@@ -37,25 +37,32 @@ struct GamesView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding([.horizontal, .bottom])
-                ScrollView(showsIndicators: false) {
-                    switch chosenDay {
-                    case .Yesterday:
-                        ForEach(games, id: \.self) { game in
-                            GameView(game: game)
-                        }
-                    case .Today:
-                        ForEach(games, id: \.self) { game in
-                            GameView(game: game)
-                        }
-                    case .Tomorrow:
-                        ForEach(games, id: \.self) { game in
-                            GameView(game: game)
+                if games.isEmpty {
+                    Spacer()
+                    Text("No games scheduled.")
+                    Spacer()
+                }
+                else {
+                    ScrollView(showsIndicators: false) {
+                        switch chosenDay {
+                        case .Yesterday:
+                            ForEach(games, id: \.self) { game in
+                                GameView(game: game)
+                            }
+                        case .Today:
+                            ForEach(games, id: \.self) { game in
+                                GameView(game: game)
+                            }
+                        case .Tomorrow:
+                            ForEach(games, id: \.self) { game in
+                                GameView(game: game)
+                            }
                         }
                     }
-                }
-                .padding()
-                .refreshable {
-                    gamesViewModel.load()
+                    .padding()
+                    .refreshable {
+                        gamesViewModel.load()
+                    }
                 }
             }
         }
