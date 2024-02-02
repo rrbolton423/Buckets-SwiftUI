@@ -68,13 +68,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E27366E72B6C631D000C49BC /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		E29CBB482B699AA4000B17E1 /* Boxscores */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,7 +113,6 @@
 				E2FA08832B6440420071D0DD /* BucketsApp.swift */,
 				E206EFD52B6454B20078A3B7 /* LaunchScreen.storyboard */,
 				E2FA08A52B6443B70071D0DD /* ComponentViews */,
-				E27366E72B6C631D000C49BC /* Extensions */,
 				E2FA08A62B6443C60071D0DD /* MainViews */,
 				E2FA08A72B6443CF0071D0DD /* Model */,
 				E2FA08A92B6443E20071D0DD /* SupportFiles */,
@@ -406,7 +398,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"Buckets/Preview Content\"";
 				DEVELOPMENT_TEAM = XQ87AL2NL5;
 				ENABLE_PREVIEWS = YES;
@@ -439,7 +431,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"Buckets/Preview Content\"";
 				DEVELOPMENT_TEAM = XQ87AL2NL5;
 				ENABLE_PREVIEWS = YES;

@@ -17,17 +17,20 @@ class StandingsViewModel: ObservableObject {
     }
 
     @Published private(set) var state = State.idle
+    @Published var showAlert = false
 
-    init() {
+    func load () {
         self.getStandings { results in
             switch results {
             case .success(let standings):
                 DispatchQueue.main.async {
                     self.state = .loaded(standings)
+                    self.showAlert = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.state = .failed(error)
+                    self.showAlert = true
                 }
             }
         }

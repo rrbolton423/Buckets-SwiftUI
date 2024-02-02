@@ -17,17 +17,20 @@ class GamesViewModel: ObservableObject {
     }
     
     @Published private(set) var state = State.idle
-    
-    init() {
+    @Published var showAlert = false
+
+    func load() {
         self.getGames(day: Date.getDateString(date: Date.yesterday)) { results in
             switch results {
             case .success(let games):
                 DispatchQueue.main.async {
                     self.state = .loaded(games)
+                    self.showAlert = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.state = .failed(error)
+                    self.showAlert = true
                 }
             }
         }
@@ -37,10 +40,12 @@ class GamesViewModel: ObservableObject {
             case .success(let games):
                 DispatchQueue.main.async {
                     self.state = .loaded(games)
+                    self.showAlert = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.state = .failed(error)
+                    self.showAlert = true
                 }
             }
         }
@@ -50,16 +55,19 @@ class GamesViewModel: ObservableObject {
             case .success(let games):
                 DispatchQueue.main.async {
                     self.state = .loaded(games)
+                    self.showAlert = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.state = .failed(error)
+                    self.showAlert = true
                 }
             }
         }
     }
     
     func getGames(day: String, completed: @escaping (Result<[Games], Error>) -> Void) {
+        state = .loading
         let endpoint = "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/scoreboardv3&GameDate=\(day)&LeagueID=00"
         
         guard let url = URL(string: endpoint) else {

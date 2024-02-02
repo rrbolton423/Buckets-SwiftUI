@@ -11,6 +11,7 @@ import SwiftUI
 struct GamesView: View {
     @StateObject var gamesViewModel = GamesViewModel()
     @State private var chosenDay: GameDays = .Today
+    @State private var showAlert = false
 
     var body: some View {
         VStack {
@@ -18,14 +19,12 @@ struct GamesView: View {
                 .padding()
             switch gamesViewModel.state {
             case .idle:
-                Color.clear
+                Color.clear.onAppear(perform: gamesViewModel.load)
             case .loading:
                 Spacer()
                 ProgressView()
                 Spacer()
-            case .failed(let error):
-                Spacer()
-                Text(error.localizedDescription)
+            case .failed(_):
                 Spacer()
             case .loaded(let games):
                 Picker("Days", selection: $chosenDay){
@@ -55,8 +54,16 @@ struct GamesView: View {
                     }
                 }
                 .padding()
+                .refreshable {
+                    gamesViewModel.load()
+                }
             }
         }
+        .alert(isPresented: $gamesViewModel.showAlert, content: {
+            Alert(title: Text("Something went wrong"),
+                  message: Text("Please try again."),
+                  dismissButton: .default(Text("OK"), action: gamesViewModel.load))
+        })
     }
 }
 
