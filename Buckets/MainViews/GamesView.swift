@@ -67,9 +67,9 @@ struct GamesView: View {
             }
         }
         .alert(isPresented: $gamesViewModel.showAlert, content: {
-            Alert(title: Text("Something went wrong"),
-                  message: Text("Please try again."),
-                  dismissButton: .default(Text("OK"), action: gamesViewModel.load))
+            Alert(title: Text("Cannot Connect!"),
+                  message: Text("We are having trouble connecting to the application. Please exit the app and try again."),
+                  dismissButton: .default(Text("OK")))
         })
     }
 }
