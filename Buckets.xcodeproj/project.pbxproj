@@ -118,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				E2FA08832B6440420071D0DD /* BucketsApp.swift */,
+				E206EFD52B6454B20078A3B7 /* LaunchScreen.storyboard */,
 				E2FA08A52B6443B70071D0DD /* ComponentViews */,
 				E27366E72B6C631D000C49BC /* Extensions */,
 				E2FA08A62B6443C60071D0DD /* MainViews */,
@@ -148,7 +149,6 @@
 		E2FA08A62B6443C60071D0DD /* MainViews */ = {
 			isa = PBXGroup;
 			children = (
-				E206EFD52B6454B20078A3B7 /* LaunchScreen.storyboard */,
 				E2FA08932B6440620071D0DD /* FavoriteView.swift */,
 				E2FA08952B6440670071D0DD /* GamesView.swift */,
 				E2FA08972B64406C0071D0DD /* MainView.swift */,
