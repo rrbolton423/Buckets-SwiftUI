@@ -15,31 +15,27 @@ struct FavoriteView: View {
         VStack {
             HeaderView(text: "Favorite Team")
                 .padding()
-
-            Spacer()
-
-            Text("Your favorite team is:")
-                .font(.title2)
-                .bold()
-            VStack {
-                teamsDict[favoriteTeam.rawValue]!
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 200)
-                    .padding()
-                Text(favoriteTeam.rawValue)
-                    .font(.title)
+            ScrollView {
+                Text("Your favorite team is:")
+                    .font(.title2)
                     .bold()
-            }
-
-            Picker("Team", selection: $favoriteTeam) {
-                ForEach(Teams.allCases) {
-                    Text($0.rawValue).tag($0)
+                VStack {
+                    teamsDict[favoriteTeam.rawValue]!
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 200)
+                        .padding()
+                    Text(favoriteTeam.rawValue)
+                        .font(.title)
+                        .bold()
                 }
+                Picker("Team", selection: $favoriteTeam) {
+                    ForEach(Teams.allCases) {
+                        Text($0.rawValue).tag($0)
+                    }
+                }
+                .pickerStyle(InlinePickerStyle())
             }
-            .pickerStyle(InlinePickerStyle())
-
-            Spacer()
         }
     }
 }
