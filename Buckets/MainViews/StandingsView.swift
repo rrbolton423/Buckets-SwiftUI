@@ -11,42 +11,29 @@ import SwiftUI
 struct StandingsView: View {
     @StateObject private var standingsViewModel = StandingsViewModel()
     @State private var chosenConference = Conferences.Western
-
+    
     var body: some View {
         VStack {
             HeaderView(text: "Standings")
                 .padding()
-            switch standingsViewModel.state {
-            case .idle:
-                Color.clear.onAppear(perform: standingsViewModel.load)
-            case .loading:
-                Spacer()
-                ProgressView()
-                Spacer()
-            case .failed(_):
-                Spacer()
-            case .loaded(let standings):
-                ConferencePicker(chosenConference: $chosenConference)
-                TopBar()
-                ScrollView(showsIndicators: false) {
-                    ForEach(standings[chosenConference.rawValue]?.sorted { $0.PlayoffRank! < $1.PlayoffRank! } ?? [], id: \.self) { team in
-                        if ((team.Conference?.contains(chosenConference.rawValue)) != nil) {
-                            TeamView(teamStandings: team, position: team.PlayoffRank!)
-                                .padding(.horizontal)
-                            Divider()
-                        }
+            ConferencePicker(chosenConference: $chosenConference)
+            TopBar()
+//            if standingsViewModel.isLoading {
+//                ProgressView()
+//            }
+//            if standingsViewModel.isShowingError {
+//                Text(standingsViewModel.errorMessage ?? "Error")
+//            }
+            ScrollView(showsIndicators: false) {
+                ForEach(standingsViewModel.standings[chosenConference.rawValue]?.sorted { $0.PlayoffRank! < $1.PlayoffRank! } ?? [], id: \.self) { team in
+                    if ((team.Conference?.contains(chosenConference.rawValue)) != nil) {
+                        TeamView(teamStandings: team, position: team.PlayoffRank!)
+                            .padding(.horizontal)
+                        Divider()
                     }
-                }
-                .refreshable {
-                    standingsViewModel.load()
                 }
             }
         }
-        .alert(isPresented: $standingsViewModel.showAlert, content: {
-            Alert(title: Text("Cannot Connect!"),
-                  message: Text("We are having trouble connecting to the application. Please exit the app and try again."),
-                  dismissButton: .default(Text("OK")))
-        })
     }
 }
 
@@ -61,37 +48,37 @@ struct TeamView: View {
     let teamStandings: Standing
     let position: Int
     @State private var showDetails = false
-
+    
     var body: some View {
         HStack {
             Text("\(position)")
                 .font(.headline)
                 .frame(width: 16)
-
+            
             Text(teamStandings.Name ?? "")
                 .bold()
-
+            
             Spacer()
-
+            
             HStack {
                 Spacer()
                 Text("\(teamStandings.Wins ?? 0)")
             }
             .frame(width: 40)
-
+            
             HStack {
                 Spacer()
                 Text("\(teamStandings.Losses ?? 0)")
             }
             .frame(width: 40)
-
+            
             HStack {
                 Spacer()
                 Text(String(format: "%.2f",
                             teamStandings.Percentage ?? 0).replacingOccurrences(of: "0.", with: "."))
             }
             .frame(width: 40)
-
+            
             HStack {
                 Spacer()
                 Text(String(format: "%.1f", teamStandings.ConferenceGamesBack ?? 0)
@@ -104,7 +91,7 @@ struct TeamView: View {
         .onTapGesture {
             showDetails.toggle()
         }
-
+        
         if showDetails {
             HStack {
                 VStack(alignment: .leading) {
@@ -116,7 +103,7 @@ struct TeamView: View {
                         ComponentView(symbol: SFSymbols.lastTen, symbolText: "Last 10", record: "\(teamStandings.LastTenRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression))
                     }
                     .padding(.bottom)
-
+                    
                     HStack(alignment: .center) {
                         VStack {
                             if teamStandings.Conference == "East" {
@@ -134,7 +121,7 @@ struct TeamView: View {
                             ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.PlayoffRank ?? 0)", record: "\(teamStandings.ConferenceRecord ?? "0 - 0")")
                         }
                         Spacer()
-
+                        
                         VStack {
                             Text("\(teamStandings.Division ?? "") Division")
                                 .font(.headline)
@@ -161,36 +148,36 @@ struct TopBar: View {
             Text("")
                 .font(.headline)
                 .frame(width: 16)
-
+            
             Text("")
                 .bold()
-
+            
             Spacer()
-
+            
             HStack {
                 Spacer()
                 Text("W")
             }
             .frame(width: 40)
-
+            
             HStack {
                 Spacer()
                 Text("L")
             }
             .frame(width: 40)
-
+            
             HStack {
                 Spacer()
                 Text("%")
             }
             .frame(width: 40)
-
+            
             HStack {
                 Spacer()
                 Text("GB")
             }
             .frame(width: 40)
-
+            
         }
         .font(.headline)
         .lineLimit(1)
@@ -215,7 +202,7 @@ struct ComponentView: View {
     let symbol: String
     let symbolText: String
     let record: String
-
+    
     var body: some View {
         VStack {
             HStack {

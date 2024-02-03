@@ -213,3 +213,4 @@ let team: [Int: Image] = [
     30: Logos.SacramentoKings
 ]
 
+let noGamesString = "No games scheduled."

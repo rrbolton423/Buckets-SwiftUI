@@ -11,74 +11,72 @@ import SwiftUI
 struct GamesView: View {
     @StateObject var gamesViewModel = GamesViewModel()
     @State private var chosenDay: GameDays = .Today
-    @State private var showAlert = false
-
+    
     var body: some View {
         VStack {
             HeaderView(text: "Games")
                 .padding()
-            switch gamesViewModel.state {
-            case .idle:
-                Color.clear.onAppear(perform: gamesViewModel.load)
-            case .loading:
-                Spacer()
-                ProgressView()
-                Spacer()
-            case .failed(_):
-                Spacer()
-            case .loaded(let games):
-                Picker("Days", selection: $chosenDay){
-                    Text(GameDays.Yesterday.rawValue)
-                        .tag(GameDays.Yesterday)
-                    Text(GameDays.Today.rawValue)
-                        .tag(GameDays.Today)
-                    Text(GameDays.Tomorrow.rawValue)
-                        .tag(GameDays.Tomorrow)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding([.horizontal, .bottom])
-                if games.isEmpty {
-                    Spacer()
-                    Text("No games scheduled.")
-                    Spacer()
-                }
-                else {
-                    ScrollView(showsIndicators: false) {
-                        switch chosenDay {
-                        case .Yesterday:
-                            ForEach(games, id: \.self) { game in
-                                GameView(game: game)
-                            }
-                        case .Today:
-                            ForEach(games, id: \.self) { game in
-                                GameView(game: game)
-                            }
-                        case .Tomorrow:
-                            ForEach(games, id: \.self) { game in
-                                GameView(game: game)
-                            }
+            Picker("Days", selection: $chosenDay) {
+                Text(GameDays.Yesterday.rawValue)
+                    .tag(GameDays.Yesterday)
+                Text(GameDays.Today.rawValue)
+                    .tag(GameDays.Today)
+                Text(GameDays.Tomorrow.rawValue)
+                    .tag(GameDays.Tomorrow)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding([.horizontal, .bottom])
+            
+//            if gamesViewModel.isLoading {
+//                ProgressView()
+//            }
+//            if gamesViewModel.isShowingError {
+//                Text(gamesViewModel.errorMessage ?? "We are having trouble connecting to the application. Please exit the app and try again.")
+//            }
+            ScrollView(showsIndicators: false) {
+                switch chosenDay {
+                case .Yesterday:
+                    if gamesViewModel.yesterdaysGames.isEmpty {
+                        HStack(alignment: .center) {
+                            Text(noGamesString)
+                        }
+                    } else {
+                        ForEach(gamesViewModel.yesterdaysGames, id: \.self) { game in
+                            GameView(game: game)
                         }
                     }
-                    .padding()
-                    .refreshable {
-                        gamesViewModel.load()
+                case .Today:
+                    if gamesViewModel.todaysGames.isEmpty {
+                        HStack(alignment: .center) {
+                            Text(noGamesString)
+                        }
+                    } else {
+                        ForEach(gamesViewModel.todaysGames, id: \.self) { game in
+                            GameView(game: game)
+                        }
+                    }
+                case .Tomorrow:
+                    if gamesViewModel.tomorrowsGames.isEmpty {
+                        HStack(alignment: .center) {
+                            Text(noGamesString)
+                        }
+                    } else {
+                        ForEach(gamesViewModel.tomorrowsGames, id: \.self) { game in
+                            GameView(game: game)
+                        }
                     }
                 }
             }
+            .padding()
         }
-        .alert(isPresented: $gamesViewModel.showAlert, content: {
-            Alert(title: Text("Cannot Connect!"),
-                  message: Text("We are having trouble connecting to the application. Please exit the app and try again."),
-                  dismissButton: .default(Text("OK")))
-        })
     }
 }
 
 struct GameView: View {
     let game: Games
-
+    
     @State private var isShowingDetails = false
-
+    
     var body: some View {
         VStack {
             HStack {
@@ -100,9 +98,9 @@ struct GameView: View {
                     .frame(height: 70)
                     .frame(maxWidth: .infinity)
             }
-
+            
             Spacer()
-
+            
             if game.gameStatus == 2 {
                 HStack {
                     Text("Quarter: \(game.period ?? 0)")
@@ -114,13 +112,13 @@ struct GameView: View {
                 Text(game.gameStatusText ?? "")
                     .font(.headline)
             }
-
+            
             Spacer()
-
+            
             if isShowingDetails {
                 QuartersView(awayTeamPeriods: game.awayTeam?.periods ?? [], homeTeamPeriods: game.homeTeam?.periods ?? [], isShowingDetails: $isShowingDetails)
             }
-
+            
         }
         .onTapGesture {
             isShowingDetails.toggle()
@@ -134,7 +132,7 @@ struct QuartersView: View {
     let awayTeamPeriods: [Periods]
     let homeTeamPeriods: [Periods]
     @Binding var isShowingDetails: Bool
-
+    
     var body: some View {
         ForEach(Array(zip(awayTeamPeriods, homeTeamPeriods)), id: \.0) { quarter in
             HStack {

@@ -9,28 +9,27 @@
 import Foundation
 
 class GamesViewModel: ObservableObject {
-    enum State {
-        case idle
-        case loading
-        case failed(Error)
-        case loaded([Games])
-    }
+    @Published var yesterdaysGames = [Games]()
+    @Published var todaysGames = [Games]()
+    @Published var tomorrowsGames = [Games]()
+    @Published var errorMessage: String?
+    @Published var isShowingError = false
+    @Published var isLoading = true
     
-    @Published private(set) var state = State.idle
-    @Published var showAlert = false
-
-    func load() {
-        self.getGames(day: Date.getDateString(date: Date.yesterday)) { results in
+    init() {
+        self.getGames(day: "2023-10-23") { results in
             switch results {
             case .success(let games):
                 DispatchQueue.main.async {
-                    self.state = .loaded(games)
-                    self.showAlert = false
+                    self.yesterdaysGames = games
+                    self.isLoading = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.state = .failed(error)
-                    self.showAlert = true
+                    self.errorMessage = error.localizedDescription
+                    self.isShowingError = true
+                    self.yesterdaysGames = []
+                    self.isLoading = false
                 }
             }
         }
@@ -39,13 +38,15 @@ class GamesViewModel: ObservableObject {
             switch results {
             case .success(let games):
                 DispatchQueue.main.async {
-                    self.state = .loaded(games)
-                    self.showAlert = false
+                    self.todaysGames = games
+                    self.isLoading = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.state = .failed(error)
-                    self.showAlert = true
+                    self.errorMessage = error.localizedDescription
+                    self.isShowingError = true
+                    self.todaysGames = []
+                    self.isLoading = false
                 }
             }
         }
@@ -54,26 +55,27 @@ class GamesViewModel: ObservableObject {
             switch results {
             case .success(let games):
                 DispatchQueue.main.async {
-                    self.state = .loaded(games)
-                    self.showAlert = false
+                    self.tomorrowsGames = games
+                    self.isLoading = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.state = .failed(error)
-                    self.showAlert = true
+                    self.errorMessage = error.localizedDescription
+                    self.isShowingError = true
+                    self.tomorrowsGames = []
+                    self.isLoading = false
                 }
             }
         }
     }
     
     func getGames(day: String, completed: @escaping (Result<[Games], Error>) -> Void) {
-        state = .loading
         let endpoint = "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/scoreboardv3&GameDate=\(day)&LeagueID=00"
         
         guard let url = URL(string: endpoint) else {
             completed(.failure(NBAError.badUrl))
             return
-        }        
+        }
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let _ = error {
                 completed(.failure(NBAError.invalidData))
