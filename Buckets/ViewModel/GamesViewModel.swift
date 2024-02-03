@@ -17,7 +17,7 @@ class GamesViewModel: ObservableObject {
     @Published var isLoading = true
     
     init() {
-        self.getGames(day: "2023-10-23") { results in
+        self.getGames(day: Date.getDateString(date: Date.yesterday)) { results in
             switch results {
             case .success(let games):
                 DispatchQueue.main.async {

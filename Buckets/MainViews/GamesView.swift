@@ -10,7 +10,7 @@ import SwiftUI
 
 struct GamesView: View {
     @StateObject var gamesViewModel = GamesViewModel()
-    @State private var chosenDay: GameDays = .Today
+    @State private var chosenDay: GameDays = .Yesterday
     
     var body: some View {
         VStack {
@@ -27,42 +27,44 @@ struct GamesView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding([.horizontal, .bottom])
             
-//            if gamesViewModel.isLoading {
-//                ProgressView()
-//            }
-//            if gamesViewModel.isShowingError {
-//                Text(gamesViewModel.errorMessage ?? "We are having trouble connecting to the application. Please exit the app and try again.")
-//            }
             ScrollView(showsIndicators: false) {
-                switch chosenDay {
-                case .Yesterday:
-                    if gamesViewModel.yesterdaysGames.isEmpty {
-                        HStack(alignment: .center) {
-                            Text(noGamesString)
+                if gamesViewModel.isLoading {
+                    ProgressView()
+                }
+                else if gamesViewModel.isShowingError {
+                    Text("Sorry, there was an error.")
+                }
+                else {
+                    switch chosenDay {
+                    case .Yesterday:
+                        if gamesViewModel.yesterdaysGames.isEmpty {
+                            HStack(alignment: .center) {
+                                Text(noGamesString)
+                            }
+                        } else {
+                            ForEach(gamesViewModel.yesterdaysGames, id: \.self) { game in
+                                GameView(game: game)
+                            }
                         }
-                    } else {
-                        ForEach(gamesViewModel.yesterdaysGames, id: \.self) { game in
-                            GameView(game: game)
+                    case .Today:
+                        if gamesViewModel.todaysGames.isEmpty {
+                            HStack(alignment: .center) {
+                                Text(noGamesString)
+                            }
+                        } else {
+                            ForEach(gamesViewModel.todaysGames, id: \.self) { game in
+                                GameView(game: game)
+                            }
                         }
-                    }
-                case .Today:
-                    if gamesViewModel.todaysGames.isEmpty {
-                        HStack(alignment: .center) {
-                            Text(noGamesString)
-                        }
-                    } else {
-                        ForEach(gamesViewModel.todaysGames, id: \.self) { game in
-                            GameView(game: game)
-                        }
-                    }
-                case .Tomorrow:
-                    if gamesViewModel.tomorrowsGames.isEmpty {
-                        HStack(alignment: .center) {
-                            Text(noGamesString)
-                        }
-                    } else {
-                        ForEach(gamesViewModel.tomorrowsGames, id: \.self) { game in
-                            GameView(game: game)
+                    case .Tomorrow:
+                        if gamesViewModel.tomorrowsGames.isEmpty {
+                            HStack(alignment: .center) {
+                                Text(noGamesString)
+                            }
+                        } else {
+                            ForEach(gamesViewModel.tomorrowsGames, id: \.self) { game in
+                                GameView(game: game)
+                            }
                         }
                     }
                 }

@@ -18,18 +18,20 @@ struct StandingsView: View {
                 .padding()
             ConferencePicker(chosenConference: $chosenConference)
             TopBar()
-//            if standingsViewModel.isLoading {
-//                ProgressView()
-//            }
-//            if standingsViewModel.isShowingError {
-//                Text(standingsViewModel.errorMessage ?? "Error")
-//            }
             ScrollView(showsIndicators: false) {
-                ForEach(standingsViewModel.standings[chosenConference.rawValue]?.sorted { $0.PlayoffRank! < $1.PlayoffRank! } ?? [], id: \.self) { team in
-                    if ((team.Conference?.contains(chosenConference.rawValue)) != nil) {
-                        TeamView(teamStandings: team, position: team.PlayoffRank!)
-                            .padding(.horizontal)
-                        Divider()
+                if standingsViewModel.isLoading {
+                    ProgressView()
+                }
+                else if standingsViewModel.isShowingError {
+                    Text("Sorry, there was an error.")
+                }
+                else {
+                    ForEach(standingsViewModel.standings[chosenConference.rawValue]?.sorted { $0.PlayoffRank! < $1.PlayoffRank! } ?? [], id: \.self) { team in
+                        if ((team.Conference?.contains(chosenConference.rawValue)) != nil) {
+                            TeamView(teamStandings: team, position: team.PlayoffRank!)
+                                .padding(.horizontal)
+                            Divider()
+                        }
                     }
                 }
             }
