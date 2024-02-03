@@ -9,9 +9,9 @@
 import Foundation
 
 class GamesViewModel: ObservableObject {
-    @Published var yesterdaysGames = [Games]()
-    @Published var todaysGames = [Games]()
-    @Published var tomorrowsGames = [Games]()
+    @Published var yesterdaysGames: [Games]? = nil
+    @Published var todaysGames: [Games]? = nil
+    @Published var tomorrowsGames: [Games]? = nil
     @Published var errorMessage: String?
     @Published var isShowingError = false
     @Published var isLoading = true

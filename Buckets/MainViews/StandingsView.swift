@@ -17,7 +17,6 @@ struct StandingsView: View {
             HeaderView(text: "Standings")
                 .padding()
             ConferencePicker(chosenConference: $chosenConference)
-            TopBar()
             ScrollView(showsIndicators: false) {
                 if standingsViewModel.isLoading {
                     ProgressView()
@@ -26,11 +25,17 @@ struct StandingsView: View {
                     Text("Sorry, there was an error.")
                 }
                 else {
-                    ForEach(standingsViewModel.standings[chosenConference.rawValue]?.sorted { $0.PlayoffRank! < $1.PlayoffRank! } ?? [], id: \.self) { team in
-                        if ((team.Conference?.contains(chosenConference.rawValue)) != nil) {
-                            TeamView(teamStandings: team, position: team.PlayoffRank!)
-                                .padding(.horizontal)
-                            Divider()
+                    if standingsViewModel.isEmptyStandings {
+                        Text("No standings available.")
+                    }
+                    else {
+                        TopBar()
+                        ForEach(standingsViewModel.standings[chosenConference.rawValue]?.sorted { $0.PlayoffRank! < $1.PlayoffRank! } ?? [], id: \.self) { team in
+                            if ((team.Conference?.contains(chosenConference.rawValue)) != nil) {
+                                TeamView(teamStandings: team, position: team.PlayoffRank!)
+                                    .padding(.horizontal)
+                                Divider()
+                            }
                         }
                     }
                 }

@@ -37,32 +37,32 @@ struct GamesView: View {
                 else {
                     switch chosenDay {
                     case .Yesterday:
-                        if gamesViewModel.yesterdaysGames.isEmpty {
+                        if (gamesViewModel.yesterdaysGames != nil) && (gamesViewModel.yesterdaysGames?.count == 0) {
                             HStack(alignment: .center) {
                                 Text(noGamesString)
                             }
                         } else {
-                            ForEach(gamesViewModel.yesterdaysGames, id: \.self) { game in
+                            ForEach(gamesViewModel.yesterdaysGames ?? [], id: \.self) { game in
                                 GameView(game: game)
                             }
                         }
                     case .Today:
-                        if gamesViewModel.todaysGames.isEmpty {
+                        if (gamesViewModel.todaysGames != nil) && (gamesViewModel.todaysGames?.count == 0) {
                             HStack(alignment: .center) {
                                 Text(noGamesString)
                             }
                         } else {
-                            ForEach(gamesViewModel.todaysGames, id: \.self) { game in
+                            ForEach(gamesViewModel.todaysGames ?? [], id: \.self) { game in
                                 GameView(game: game)
                             }
                         }
                     case .Tomorrow:
-                        if gamesViewModel.tomorrowsGames.isEmpty {
+                        if (gamesViewModel.tomorrowsGames) != nil && (gamesViewModel.tomorrowsGames?.count == 0) {
                             HStack(alignment: .center) {
                                 Text(noGamesString)
                             }
                         } else {
-                            ForEach(gamesViewModel.tomorrowsGames, id: \.self) { game in
+                            ForEach(gamesViewModel.tomorrowsGames ?? [], id: \.self) { game in
                                 GameView(game: game)
                             }
                         }

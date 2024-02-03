@@ -13,6 +13,7 @@ class StandingsViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isShowingError = false
     @Published var isLoading = true
+    @Published var isEmptyStandings = false
     
     init() {
         self.getStandings { results in
@@ -64,6 +65,10 @@ class StandingsViewModel: ObservableObject {
                    let resultSets = json["resultSets"] as? [[String: Any]],
                    let headers = resultSets[0]["headers"] as? [String],
                    let rowSet = resultSets[0]["rowSet"] as? [[Any]] {
+                    
+                    if rowSet.isEmpty {
+                        self.isEmptyStandings = true
+                    }
                     
                     var headerIndexMap = [String: Int]()
                     for (index, header) in headers.enumerated() {
