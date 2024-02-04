@@ -10,7 +10,7 @@ import SwiftUI
 
 struct GamesView: View {
     @StateObject var gamesViewModel = GamesViewModel()
-    @State private var chosenDay: GameDays = .Yesterday
+    @State private var chosenDay: GameDays = .Today
     
     var body: some View {
         VStack {
@@ -138,11 +138,7 @@ struct QuartersView: View {
     var body: some View {
         ForEach(Array(zip(awayTeamPeriods, homeTeamPeriods)), id: \.0) { quarter in
             HStack {
-                if quarter.0.period ?? 0 > 4 {
-                    Text("\(quarter.0.period ?? 0)")
-                } else {
-                    Text("Quarter \(quarter.0.period ?? 0)")
-                }
+                Text("Quarter \(quarter.0.period ?? 0)")
                 Spacer()
                 Text("\(quarter.0.score ?? 0) - \(quarter.1.score ?? 0)")
             }
