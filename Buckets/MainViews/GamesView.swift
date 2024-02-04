@@ -103,17 +103,16 @@ struct GameView: View {
             
             Spacer()
             
-            if game.gameStatus == 2 {
-                HStack {
+            HStack {
+                if game.gameStatus == 2 {
                     Text("Quarter: \(game.period ?? 0)")
                     Text("\(game.gameClock ?? "")"
                         .trimmingCharacters(in: .whitespacesAndNewlines))
+                } else {
+                    Text(game.gameStatusText ?? "")
                 }
-                .font(.headline)
-            } else {
-                Text(game.gameStatusText ?? "")
-                    .font(.headline)
             }
+            .font(.headline)
             
             Spacer()
             
