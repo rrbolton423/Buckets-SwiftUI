@@ -91,8 +91,6 @@ struct GameView: View {
                 Text("\(game.awayTeam?.score ?? 0) - \(game.homeTeam?.score ?? 0)")
                     .font(.title)
                     .bold()
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.01)
                 Spacer()
                 Image(game.homeTeam?.teamTricode ?? "")
                     .resizable()
@@ -100,6 +98,8 @@ struct GameView: View {
                     .frame(height: 70)
                     .frame(maxWidth: .infinity)
             }
+            .lineLimit(1)
+            .minimumScaleFactor(0.01)
             
             Spacer()
             
@@ -113,6 +113,8 @@ struct GameView: View {
                 }
             }
             .font(.headline)
+            .lineLimit(1)
+            .minimumScaleFactor(0.01)
             
             Spacer()
             

@@ -116,14 +116,10 @@ struct TeamView: View {
                             if teamStandings.Conference == "East" {
                                 Text("Eastern Conference")
                                     .font(.headline)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.01)
                             }
                             else if teamStandings.Conference == "West" {
                                 Text("Western Conference")
                                     .font(.headline)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.01)
                             }
                             ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.PlayoffRank ?? 0)", record: "\(teamStandings.ConferenceRecord ?? "0 - 0")")
                         }
@@ -132,8 +128,6 @@ struct TeamView: View {
                         VStack {
                             Text("\(teamStandings.Division ?? "") Division")
                                 .font(.headline)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.01)
                             ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.DivisionRank ?? 0)", record: "\(teamStandings.DivisionRecord ?? "0 - 0")")
                         }
                     }
@@ -141,6 +135,8 @@ struct TeamView: View {
             }
             .padding()
             .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.primary))
+            .lineLimit(1)
+            .minimumScaleFactor(0.01)
             .onTapGesture {
                 showDetails.toggle()
             }
