@@ -29,6 +29,7 @@ struct StandingsView: View {
                 else {
                     if standingsViewModel.isEmptyStandings {
                         Text("No standings available.")
+                            .padding(.top)
                     }
                     else {
                         TopBar()
