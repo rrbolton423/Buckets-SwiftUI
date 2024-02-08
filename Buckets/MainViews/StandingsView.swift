@@ -20,9 +20,11 @@ struct StandingsView: View {
             ScrollView(showsIndicators: false) {
                 if standingsViewModel.isLoading {
                     ProgressView()
+                        .padding(.top)
                 }
                 else if standingsViewModel.isShowingError {
                     Text("Sorry, there was an error.")
+                        .padding(.top)
                 }
                 else {
                     if standingsViewModel.isEmptyStandings {

@@ -24,7 +24,6 @@ struct MainView: View {
                     Label("Favorite", systemImage: SFSymbols.favorites)
                 }
         }
-        .accentColor(.orange)
     }
 }
 
