@@ -156,6 +156,7 @@ enum Logos {
     static let DallasMavericks          = Image("DAL")
     static let DenverNuggets            = Image("DEN")
     static let DetroitPistons           = Image("DET")
+    static let EasternConference        = Image("EST")
     static let GoldenStateWarriors      = Image("GSW")
     static let HoustonRockets           = Image("HOU")
     static let IndianaPacers            = Image("IND")
@@ -177,6 +178,7 @@ enum Logos {
     static let TorontoRaptors           = Image("TOR")
     static let UtahJazz                 = Image("UTA")
     static let WashingtonWizards        = Image("WAS")
+    static let WesternConference        = Image("WST")
 }
 
 
@@ -210,7 +212,11 @@ let team: [Int: Image] = [
     27: Logos.LosAngelesLakers,
     28: Logos.LosAngelesClippers,
     29: Logos.PhoenixSuns,
-    30: Logos.SacramentoKings
+    30: Logos.SacramentoKings,
+    31: Logos.EasternConference,
+    32: Logos.WesternConference
 ]
 
 let noGamesString = "No games scheduled."
+let allStarFriday2024 = "2024-02-16"
+let allStarSaturday2024 = "2024-02-17"

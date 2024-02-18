@@ -70,6 +70,10 @@ class GamesViewModel: ObservableObject {
     }
     
     func getGames(day: String, completed: @escaping (Result<[Games], Error>) -> Void) {
+        if (day == allStarFriday2024) || (day == allStarSaturday2024) {
+            completed(.success([])) // Ignore All Star Friday and Saturday Festivities
+            return
+        }
         let endpoint = "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/scoreboardv3&GameDate=\(day)&LeagueID=00"
         
         guard let url = URL(string: endpoint) else {
