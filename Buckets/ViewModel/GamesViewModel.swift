@@ -70,7 +70,7 @@ class GamesViewModel: ObservableObject {
     }
     
     func getGames(day: String, completed: @escaping (Result<[Games], Error>) -> Void) {
-        if (day == allStarFriday2024) || (day == allStarSaturday2024) {
+        if (day == allStarFriday2025) || (day == allStarSaturday2025) {
             completed(.success([])) // Ignore All Star Friday and Saturday Festivities
             return
         }

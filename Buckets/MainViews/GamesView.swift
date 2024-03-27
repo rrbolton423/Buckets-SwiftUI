@@ -109,7 +109,10 @@ struct GameView: View {
                     Text("\(game.gameClock ?? "")"
                         .trimmingCharacters(in: .whitespacesAndNewlines))
                 } else {
-                    Text(game.gameStatusText ?? "")
+                    // Delete trailing whitespace from "Final" gameStatusText from API response.
+                    // API response:       "gameStatusText":"Final               "
+                    // After API response: "gameStatusText":"Final"
+                    Text(game.gameStatusText?.replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression) ?? "")
                 }
             }
             .font(.headline)

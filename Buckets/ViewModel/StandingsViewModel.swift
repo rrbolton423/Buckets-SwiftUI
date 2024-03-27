@@ -35,9 +35,8 @@ class StandingsViewModel: ObservableObject {
     }
     
     func getStandings(completed: @escaping (Result<[String : [Standing]], Error>) -> Void) {
-        let seasonStartYear = getSeasonStartYear()
-        let standingsEndpoint = "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/leaguestandingsv3&LeagueID=00&Season=\(seasonStartYear)"
-        
+        let standingsEndpoint = "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/leaguestandingsv3&LeagueID=00&Season=\(seasonStartYear2023)"
+
         guard let url = URL(string: standingsEndpoint) else {
             completed(.failure(NBAError.badUrl))
             return
@@ -125,10 +124,5 @@ class StandingsViewModel: ObservableObject {
         }
         task.resume()
     }
-    
-    func getSeasonStartYear() -> String {
-        let currentYear = Calendar.current.component(.year, from: Date())
-        let lastYear = String(currentYear - 1)
-        return lastYear
-    }
+
 }
