@@ -142,7 +142,14 @@ struct QuartersView: View {
     var body: some View {
         ForEach(Array(zip(awayTeamPeriods, homeTeamPeriods)), id: \.0) { quarter in
             HStack {
-                Text("Quarter \(quarter.0.period ?? 0)")
+                if let period = quarter.0.period {
+                    switch period {
+                    case 5...: // Handle Overtime Text
+                        Text("OT\(period - 4)")
+                    default:
+                        Text("Quarter \(period)")
+                    }
+                }
                 Spacer()
                 Text("\(quarter.0.score ?? 0) - \(quarter.1.score ?? 0)")
             }
