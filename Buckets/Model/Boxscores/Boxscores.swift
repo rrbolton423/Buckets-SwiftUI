@@ -9,19 +9,19 @@
 import Foundation
 
 struct Boxscores: Codable {
-    
+
     var scoreboard : Scoreboard? = Scoreboard()
-    
+
     enum CodingKeys: String, CodingKey {
         case scoreboard = "scoreboard"
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         scoreboard = try values.decodeIfPresent(Scoreboard.self , forKey: .scoreboard )
     }
-    
+
     init() {
-        
+
     }
 }

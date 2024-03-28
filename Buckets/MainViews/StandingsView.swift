@@ -11,7 +11,7 @@ import SwiftUI
 struct StandingsView: View {
     @StateObject private var standingsViewModel = StandingsViewModel()
     @State private var chosenConference = Conferences.Western
-    
+
     var body: some View {
         VStack {
             HeaderView(text: "Standings")
@@ -23,10 +23,14 @@ struct StandingsView: View {
                 }
                 else if standingsViewModel.isShowingError {
                     Text("Sorry, there was an error.")
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.01)
                 }
                 else {
                     if standingsViewModel.isEmptyStandings {
                         Text("No standings available.")
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.01)
                     }
                     else {
                         TopBar()
@@ -55,37 +59,37 @@ struct TeamView: View {
     let teamStandings: Standing
     let position: Int
     @State private var showDetails = false
-    
+
     var body: some View {
         HStack {
             Text("\(position)")
                 .font(.headline)
                 .frame(width: 16)
-            
+
             Text(teamStandings.Name ?? "")
                 .bold()
-            
+
             Spacer()
-            
+
             HStack {
                 Spacer()
                 Text("\(teamStandings.Wins ?? 0)")
             }
             .frame(width: 40)
-            
+
             HStack {
                 Spacer()
                 Text("\(teamStandings.Losses ?? 0)")
             }
             .frame(width: 40)
-            
+
             HStack {
                 Spacer()
                 Text(String(format: "%.2f",
                             teamStandings.Percentage ?? 0).replacingOccurrences(of: "0.", with: "."))
             }
             .frame(width: 40)
-            
+
             HStack {
                 Spacer()
                 Text(String(format: "%.1f", teamStandings.ConferenceGamesBack ?? 0)
@@ -98,36 +102,42 @@ struct TeamView: View {
         .onTapGesture {
             showDetails.toggle()
         }
-        
+
         if showDetails {
             HStack {
                 VStack(alignment: .leading) {
                     HStack(alignment: .center) {
-                        ComponentView(symbol: SFSymbols.home, symbolText: "Home", record: "\(teamStandings.HomeRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression))
+                        ComponentView(symbol: SFSymbols.home, symbolText: "Home", record: "\(teamStandings.HomeRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression)) // Remove whitespace from String
                         Spacer()
-                        ComponentView(symbol: SFSymbols.away, symbolText: "Away", record: "\(teamStandings.AwayRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression))
+                        ComponentView(symbol: SFSymbols.away, symbolText: "Away", record: "\(teamStandings.AwayRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression)) // Remove whitespace from String
                         Spacer()
-                        ComponentView(symbol: SFSymbols.lastTen, symbolText: "Last 10", record: "\(teamStandings.LastTenRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression))
+                        ComponentView(symbol: SFSymbols.lastTen, symbolText: "Last 10", record: "\(teamStandings.LastTenRecord ?? "0 - 0")".replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression)) // Remove whitespace from String
                     }
                     .padding(.bottom)
-                    
+
                     HStack(alignment: .center) {
                         VStack {
                             if teamStandings.Conference == "East" {
                                 Text("Eastern Conference")
                                     .font(.headline)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.01)
                             }
                             else if teamStandings.Conference == "West" {
                                 Text("Western Conference")
                                     .font(.headline)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.01)
                             }
                             ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.PlayoffRank ?? 0)", record: "\(teamStandings.ConferenceRecord ?? "0 - 0")")
                         }
                         Spacer()
-                        
+
                         VStack {
                             Text("\(teamStandings.Division ?? "") Division")
                                 .font(.headline)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.01)
                             ComponentView(symbol: SFSymbols.ranking, symbolText: "Rank: \(teamStandings.DivisionRank ?? 0)", record: "\(teamStandings.DivisionRecord ?? "0 - 0")")
                         }
                     }
@@ -151,36 +161,36 @@ struct TopBar: View {
             Text("")
                 .font(.headline)
                 .frame(width: 16)
-            
+
             Text("")
                 .bold()
-            
+
             Spacer()
-            
+
             HStack {
                 Spacer()
                 Text("W")
             }
             .frame(width: 40)
-            
+
             HStack {
                 Spacer()
                 Text("L")
             }
             .frame(width: 40)
-            
+
             HStack {
                 Spacer()
                 Text("%")
             }
             .frame(width: 40)
-            
+
             HStack {
                 Spacer()
                 Text("GB")
             }
             .frame(width: 40)
-            
+
         }
         .font(.headline)
         .lineLimit(1)
@@ -205,7 +215,7 @@ struct ComponentView: View {
     let symbol: String
     let symbolText: String
     let record: String
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -216,14 +226,18 @@ struct ComponentView: View {
                     .frame(width: 22, height: 22)
                 Text(symbolText)
                     .font(.headline)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.01)
                 Spacer()
             }
             HStack {
                 Spacer()
                 Text("\(record)"
-                    .replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression)
+                    .replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression) // Remove whitespace from String
                     .replacingOccurrences(of: "-", with: " - "))
                 .bold()
+                .lineLimit(1)
+                .minimumScaleFactor(0.01)
                 Spacer()
             }
         }

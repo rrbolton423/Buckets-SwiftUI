@@ -15,7 +15,7 @@ class GamesViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isShowingError = false
     @Published var isLoading = true
-    
+
     init() {
         self.getGames(day: Date.getDateString(date: Date.yesterday)) { results in
             switch results {
@@ -33,7 +33,7 @@ class GamesViewModel: ObservableObject {
                 }
             }
         }
-        
+
         self.getGames(day: Date.getDateString(date: Date.today)) { results in
             switch results {
             case .success(let games):
@@ -50,7 +50,7 @@ class GamesViewModel: ObservableObject {
                 }
             }
         }
-        
+
         self.getGames(day: Date.getDateString(date: Date.tomorrow)) { results in
             switch results {
             case .success(let games):
@@ -68,14 +68,14 @@ class GamesViewModel: ObservableObject {
             }
         }
     }
-    
+
     func getGames(day: String, completed: @escaping (Result<[Games], Error>) -> Void) {
         if (day == allStarFriday2025) || (day == allStarSaturday2025) {
             completed(.success([])) // Ignore All Star Friday and Saturday Festivities
             return
         }
         let endpoint = "https://proxy.boxscores.site/?apiUrl=stats.nba.com/stats/scoreboardv3&GameDate=\(day)&LeagueID=00"
-        
+
         guard let url = URL(string: endpoint) else {
             completed(.failure(NBAError.badUrl))
             return
@@ -85,17 +85,17 @@ class GamesViewModel: ObservableObject {
                 completed(.failure(NBAError.invalidData))
                 return
             }
-            
+
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                 completed(.failure(NBAError.invalidResponse))
                 return
             }
-            
+
             guard let data = data else {
                 completed(.failure(NBAError.invalidData))
                 return
             }
-            
+
             let decoder = JSONDecoder()
             do {
                 let api = try decoder.decode(Boxscores.self, from: data)

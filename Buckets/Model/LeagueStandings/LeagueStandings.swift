@@ -17,7 +17,7 @@ struct LeagueStandings: Codable {
         case resultSets = "resultSets"
 
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 

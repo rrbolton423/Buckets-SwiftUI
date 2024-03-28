@@ -19,6 +19,8 @@ struct FavoriteView: View {
                 Text("Your favorite team is:")
                     .font(.title2)
                     .bold()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.01)
                 VStack {
                     teamsDict[favoriteTeam.rawValue]!
                         .resizable()
@@ -28,10 +30,14 @@ struct FavoriteView: View {
                     Text(favoriteTeam.rawValue)
                         .font(.title)
                         .bold()
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.01)
                 }
                 Picker("Team", selection: $favoriteTeam) {
                     ForEach(Teams.allCases) {
                         Text($0.rawValue).tag($0)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.01)
                     }
                 }
                 .pickerStyle(InlinePickerStyle())

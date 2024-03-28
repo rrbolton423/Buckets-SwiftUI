@@ -23,6 +23,8 @@ struct HeaderView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.leading, 8)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.01)
                 Spacer()
             }
             .padding()
