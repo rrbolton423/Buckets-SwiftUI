@@ -217,7 +217,7 @@ let team: [Int: Image] = [
     32: Logos.WesternConference
 ]
 
-let seasonStartYear2023 = "2023"
+let seasonStartYear2023 = "2024"
 let allStarFriday2025 = "2025-02-14"
 let allStarSaturday2025 = "2025-02-15"
 let noGamesString = "No games scheduled."
